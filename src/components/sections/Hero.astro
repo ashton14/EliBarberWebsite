@@ -1,0 +1,255 @@
+---
+// Hero: a full-bleed photo with a framed felt letterboard over its lower
+// edge. The board carries the live status, the H1, the value line and the
+// two actions. The photo is the LCP element: eager, high priority, and
+// preloaded from the page <head> (see pages/index.astro).
+import { Picture } from "astro:assets";
+import { SITE } from "../../config/site";
+import { formatMinutes, formatPrice, telHref } from "../../lib/format";
+import { HERO_SIZES, HERO_WIDTHS, isPlaceholder, photo } from "../../lib/media";
+import BookLink from "../BookLink.astro";
+import Icon from "../Icon.astro";
+import OpenStatus from "../OpenStatus.astro";
+import Todo from "../Todo.astro";
+
+const { hero, business, ui } = SITE;
+const call = telHref(business.phone);
+
+// One letterboard price line, from the first popular service. Shown only
+// once its real price and time exist (never a placeholder price).
+const lead = SITE.services.items.find((s) => s.popular);
+const leadPrice = lead ? formatPrice(lead.price, lead.priceFrom) : null;
+const leadTime = lead ? formatMinutes(lead.minutes) : null;
+---
+
+<section class="hero on-felt" aria-labelledby="hero-title" style={`--hero-focus: ${hero.photoPosition}`}>
+  <div class="hero-photo">
+    <Picture
+      src={photo(hero.photo)}
+      alt={hero.photoAlt}
+      formats={["avif", "webp"]}
+      widths={HERO_WIDTHS}
+      sizes={HERO_SIZES}
+      quality={62}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    {
+      /* While the hero is a placeholder, label it in HTML so the label stays
+         clear of the board at every crop (a label baked into the image can't). */
+      isPlaceholder(hero.photo) && (
+        <p class="photo-label" aria-hidden="true">
+          {hero.photoAlt}
+        </p>
+      )
+    }
+  </div>
+
+  <div class="container hero-stage">
+    <div class="board hero-board">
+      <OpenStatus />
+      <h1 id="hero-title" class="peg">{hero.title}</h1>
+      <p class="hero-lede">{hero.lede}</p>
+      {
+        lead && leadPrice && leadTime && (
+          <p class="hero-price peg">
+            <a href="/#services">
+              <span>{lead.name}</span>
+              <span class="leader" aria-hidden="true" />
+              <span>
+                {leadPrice} · {leadTime}
+              </span>
+            </a>
+          </p>
+        )
+      }
+      <div class="hero-actions">
+        <BookLink />
+        <a class="button button--ghost" href={call ?? "#todo-phone"} data-todo={call ? undefined : "phone"}>
+          <Icon name="phone" size={20} />
+          {ui.call}
+        </a>
+      </div>
+      {
+        (!business.bookingUrl || !business.phone) && (
+          <p class="hero-todo">
+            {!business.bookingUrl && <Todo label="booking URL" />} {!business.phone && <Todo label="phone" />}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding-block-end: var(--space-4);
+  }
+
+  .hero-photo :global(img) {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    /* Short screens (landscape phones, 200% zoom): keep the board in view */
+    max-block-size: 30svh;
+  }
+
+  .hero-photo {
+    position: relative;
+  }
+
+  .photo-label {
+    position: absolute;
+    inset-block-start: var(--space-3);
+    inset-inline-end: var(--gutter);
+    margin: 0;
+    font-family: var(--font-board);
+    font-weight: 600;
+    font-size: var(--text-board);
+    letter-spacing: var(--tracking-board);
+    text-transform: uppercase;
+    color: var(--peg-muted);
+  }
+
+  /* Narrow phones: the board gives up room (not the photo) so both hero
+     buttons clear the bottom action bar. */
+  @media (max-width: 26rem) {
+    .hero .hero-board {
+      padding: 1.1rem;
+      gap: 0.75rem;
+    }
+
+    .hero .hero-stage {
+      margin-block-start: -3.5rem;
+    }
+
+    .hero .hero-board h1 {
+      font-size: 2.25rem;
+    }
+
+    .hero .hero-lede {
+      font-size: var(--text-base);
+    }
+
+    .hero .hero-actions {
+      margin-block-start: 0;
+    }
+  }
+
+  .hero-stage {
+    position: relative;
+    margin-block-start: clamp(-4rem, -10vw, -2.5rem);
+  }
+
+  .hero-board {
+    padding: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .hero-board h1 {
+    color: var(--peg);
+    font-size: var(--text-h1);
+    line-height: 0.98;
+  }
+
+  .hero-lede {
+    font-size: var(--text-lg);
+    color: var(--peg-muted);
+    margin: 0;
+    max-inline-size: 34ch;
+  }
+
+  .hero-price {
+    margin: 0;
+    max-inline-size: 30rem;
+    font-size: var(--text-board);
+  }
+
+  .hero-price a {
+    display: flex;
+    gap: 0.5rem;
+    min-block-size: 44px;
+    align-items: center;
+    text-decoration: none;
+    color: var(--peg);
+  }
+
+  .hero-price .leader {
+    flex: 1 1 1.5rem;
+    border-block-end: 3px dotted var(--peg-faint);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block-start: var(--space-1);
+  }
+
+  .hero-actions > :global(*) {
+    flex: 1 1 10rem;
+  }
+
+  .hero-todo {
+    margin: 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Tablet and up: the photo fills the first screen and the board hangs
+     on its lower-left edge, like the shop's own sign by the chair. */
+  /* The layout sets the height (never the photo's own shape), so Book stays
+     above the fold on a 1366×768 laptop and a portrait photo can't stretch
+     the hero. The photo covers the box; site.ts → hero.photoPosition keeps
+     the subject clear of the board. */
+  @media (min-width: 48rem) {
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      min-block-size: min(86svh, 54rem);
+      padding-block-end: 0;
+      overflow: hidden;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+
+    .photo-label {
+      inset-block-start: var(--space-4);
+    }
+
+    .hero-photo :global(picture),
+    .hero-photo :global(img) {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    .hero-photo :global(img) {
+      aspect-ratio: auto;
+      max-block-size: none;
+      object-position: var(--hero-focus, 70% 40%);
+    }
+
+    .hero-stage {
+      margin-block-start: 0;
+      padding-block: var(--space-5);
+    }
+
+    .hero-board {
+      max-inline-size: 40rem;
+    }
+
+    .hero-actions > :global(*) {
+      flex: 0 0 auto;
+    }
+  }
+</style>

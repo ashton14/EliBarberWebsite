@@ -1,0 +1,622 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-20T02:02:42.000Z",
+  "title": "Design System: Conejo Barber",
+  "extensions": {
+    "colorMeta": {
+      "felt": {
+        "role": "neutral",
+        "displayName": "Ribbed Felt",
+        "canonical": "#141312",
+        "oklch": "oklch(18.7% 0.003 67)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252423",
+          "#403f3f",
+          "#5e5d5c",
+          "#81807f",
+          "#a5a4a3",
+          "#cbcac9",
+          "#efeeed"
+        ]
+      },
+      "felt-raised": {
+        "role": "neutral",
+        "displayName": "Raised Felt",
+        "canonical": "#24221f",
+        "oklch": "oklch(25.3% 0.006 78)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252422",
+          "#413f3d",
+          "#5f5d5a",
+          "#82807c",
+          "#a6a4a1",
+          "#cccac7",
+          "#f0eeec"
+        ]
+      },
+      "felt-groove": {
+        "role": "neutral",
+        "displayName": "Felt Groove",
+        "canonical": "#1c1b19",
+        "oklch": "oklch(22.2% 0.004 84)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252422",
+          "#40403e",
+          "#5e5d5b",
+          "#81807e",
+          "#a5a4a2",
+          "#cbcac8",
+          "#efeeed"
+        ]
+      },
+      "felt-line": {
+        "role": "neutral",
+        "displayName": "Felt Hairline",
+        "canonical": "#3a3733",
+        "oklch": "oklch(33.8% 0.008 75)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262421",
+          "#423f3c",
+          "#605d59",
+          "#83807b",
+          "#a7a4a0",
+          "#cdcac7",
+          "#f0eeeb"
+        ]
+      },
+      "peg": {
+        "role": "neutral",
+        "displayName": "Peg White",
+        "canonical": "#f2efe8",
+        "oklch": "oklch(95.3% 0.010 87)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252420",
+          "#41403b",
+          "#605d58",
+          "#82807a",
+          "#a7a49f",
+          "#cccac6",
+          "#f0eeea"
+        ]
+      },
+      "peg-muted": {
+        "role": "neutral",
+        "displayName": "Faded Peg",
+        "canonical": "#a8a296",
+        "oklch": "oklch(71.4% 0.018 84)",
+        "tonalRamp": [
+          "#0d0b07",
+          "#27241d",
+          "#433f37",
+          "#625d53",
+          "#858075",
+          "#a9a49a",
+          "#cecac2",
+          "#f2eee7"
+        ]
+      },
+      "peg-faint": {
+        "role": "neutral",
+        "displayName": "Peg Dust",
+        "canonical": "rgb(242 239 232 / 0.35)",
+        "purpose": "Dotted price leaders only; decorative.",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252420",
+          "#41403b",
+          "#605d58",
+          "#82807a",
+          "#a7a49f",
+          "#cccac6",
+          "#f0eeea"
+        ]
+      },
+      "peg-line": {
+        "role": "neutral",
+        "displayName": "Peg Chalk Line",
+        "canonical": "rgb(242 239 232 / 0.55)",
+        "purpose": "Ghost button border on felt (3:1+ non-text contrast).",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252420",
+          "#41403b",
+          "#605d58",
+          "#82807a",
+          "#a7a49f",
+          "#cccac6",
+          "#f0eeea"
+        ]
+      },
+      "peg-wash": {
+        "role": "neutral",
+        "displayName": "Peg Wash",
+        "canonical": "rgb(242 239 232 / 0.08)",
+        "purpose": "Ghost button hover fill.",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252420",
+          "#41403b",
+          "#605d58",
+          "#82807a",
+          "#a7a49f",
+          "#cccac6",
+          "#f0eeea"
+        ]
+      },
+      "gold": {
+        "role": "primary",
+        "displayName": "Book Gold",
+        "canonical": "#d6a84e",
+        "oklch": "oklch(75.7% 0.120 81)",
+        "tonalRamp": [
+          "#130900",
+          "#312100",
+          "#543b00",
+          "#795700",
+          "#a2781e",
+          "#c39f5a",
+          "#e5c68d",
+          "#ffeccb"
+        ]
+      },
+      "gold-hover": {
+        "role": "primary",
+        "displayName": "Lamplit Gold",
+        "canonical": "#e7c27a",
+        "oklch": "oklch(83.1% 0.100 83)",
+        "tonalRamp": [
+          "#130900",
+          "#302100",
+          "#533b00",
+          "#775810",
+          "#9b7b38",
+          "#bda068",
+          "#e0c798",
+          "#ffecc9"
+        ]
+      },
+      "on-gold": {
+        "role": "primary",
+        "displayName": "Felt Black on Gold",
+        "canonical": "#141312",
+        "oklch": "oklch(18.7% 0.003 67)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252423",
+          "#403f3f",
+          "#5e5d5c",
+          "#81807f",
+          "#a5a4a3",
+          "#cbcac9",
+          "#efeeed"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Receipt Paper",
+        "canonical": "#f3f1ec",
+        "oklch": "oklch(95.8% 0.007 88)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#252421",
+          "#41403c",
+          "#5f5d5a",
+          "#82807c",
+          "#a6a4a1",
+          "#cccac7",
+          "#efeeeb"
+        ]
+      },
+      "paper-alt": {
+        "role": "neutral",
+        "displayName": "Older Receipt",
+        "canonical": "#ebe7de",
+        "oklch": "oklch(92.9% 0.013 86)",
+        "tonalRamp": [
+          "#0c0b08",
+          "#26241f",
+          "#423f3a",
+          "#605d56",
+          "#838078",
+          "#a7a49d",
+          "#cdcac4",
+          "#f0eee9"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#1b1a18",
+        "oklch": "oklch(21.8% 0.004 84)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252422",
+          "#40403e",
+          "#5e5d5b",
+          "#81807e",
+          "#a5a4a2",
+          "#cbcac8",
+          "#efeeed"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Faded Ink",
+        "canonical": "#5f5a52",
+        "oklch": "oklch(47.0% 0.014 79)",
+        "tonalRamp": [
+          "#0d0b08",
+          "#26241f",
+          "#433f39",
+          "#625d55",
+          "#847f77",
+          "#a8a49d",
+          "#cecac4",
+          "#f1eee9"
+        ]
+      },
+      "gold-ink": {
+        "role": "secondary",
+        "displayName": "Bronze Ink",
+        "canonical": "#7d5f17",
+        "oklch": "oklch(50.3% 0.094 84)",
+        "tonalRamp": [
+          "#120900",
+          "#302100",
+          "#523c01",
+          "#745919",
+          "#997c3d",
+          "#bba16d",
+          "#dec89b",
+          "#feedc9"
+        ]
+      },
+      "paper-line": {
+        "role": "neutral",
+        "displayName": "Paper Hairline",
+        "canonical": "#d9d4c9",
+        "oklch": "oklch(87.1% 0.016 86)",
+        "tonalRamp": [
+          "#0d0b07",
+          "#26241e",
+          "#433f38",
+          "#615d54",
+          "#848076",
+          "#a8a49c",
+          "#cdcac3",
+          "#f1eee8"
+        ]
+      },
+      "todo-bg": {
+        "role": "status",
+        "displayName": "Sticky-Note Yellow",
+        "canonical": "#fff3c4",
+        "oklch": "oklch(96.2% 0.062 95)",
+        "tonalRamp": [
+          "#100b00",
+          "#2a2409",
+          "#484020",
+          "#675e37",
+          "#8b8058",
+          "#aea581",
+          "#d3cbac",
+          "#f5efd5"
+        ]
+      },
+      "todo-ink": {
+        "role": "status",
+        "displayName": "Sticky-Note Ink",
+        "canonical": "#5c4400",
+        "oklch": "oklch(40.2% 0.082 85)",
+        "tonalRamp": [
+          "#120a00",
+          "#302200",
+          "#4f3d0f",
+          "#715a26",
+          "#957d47",
+          "#b8a274",
+          "#dbc9a1",
+          "#fdedcc"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero H1, peg letters on the hero board."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section H2s on paper and felt."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "H3s such as the barber's name."
+      },
+      "board-item": {
+        "displayName": "Board Item",
+        "purpose": "A service name and price on the service letterboard."
+      },
+      "board-line": {
+        "displayName": "Board Line",
+        "purpose": "Single letterboard lines: open status, hero price line, trust strip, rating board, hero photo caption."
+      },
+      "body-lg": {
+        "displayName": "Body Large",
+        "purpose": "Hero lede, section intros, review quotes, FAQ questions at 700."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy, max 65ch."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Service descriptions, breadcrumbs, compact hours."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav links, bylines, service times, role line; uppercase."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "All buttons and action-bar cells; uppercase."
+      }
+    },
+    "shadows": [
+      {
+        "name": "board",
+        "value": "0 18px 40px -12px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.35), inset 0 2px 10px rgb(0 0 0 / 0.6)",
+        "purpose": "Letterboards only: hung object plus recessed felt."
+      },
+      {
+        "name": "paper",
+        "value": "0 10px 24px -14px rgb(27 26 24 / 0.35)",
+        "purpose": "Review slips lifting off the page."
+      },
+      {
+        "name": "book",
+        "value": "0 4px 10px -4px rgb(0 0 0 / 0.45)",
+        "purpose": "The gold Book button; a neutral drop shadow, never a gold glow."
+      },
+      {
+        "name": "action-bar",
+        "value": "0 -8px 24px -12px rgb(0 0 0 / 0.6)",
+        "purpose": "Mobile action bar, cast upward."
+      },
+      {
+        "name": "peg-relief",
+        "value": "text-shadow: 0 1px 0 rgb(0 0 0 / 0.65), 0 2px 3px rgb(0 0 0 / 0.35)",
+        "purpose": "Peg letters sitting proud of the felt."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The one easing curve, for state changes."
+      },
+      {
+        "name": "dur",
+        "value": "220ms",
+        "purpose": "The one duration: button color, link arrow nudge, FAQ plus rotation."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "All transitions and animations collapse under prefers-reduced-motion: reduce."
+      },
+      {
+        "name": "gallery-push-in",
+        "value": "transform: scale(1.06); filter: contrast(1.06) saturate(1.05); 900ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The one delight: gallery photo push-in on hover. Only under (hover: hover) and prefers-reduced-motion: no-preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs-max",
+        "value": "26rem (max-width: hero board compacts)"
+      },
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "barber-container",
+        "value": "44rem (container query)"
+      }
+    ],
+    "textures": [
+      {
+        "name": "felt-texture",
+        "value": "repeating-linear-gradient(to bottom, var(--felt) 0 5px, var(--felt-groove) 5px 7px)",
+        "purpose": "Ribbing on every felt surface."
+      }
+    ],
+    "layout": [
+      {
+        "name": "hero-height",
+        "value": "min(86svh, 54rem)",
+        "purpose": "From 48rem the layout sets the hero height; the photo covers it, focal point from --hero-focus (site config, default 70% 40%)."
+      },
+      {
+        "name": "hero-photo-cap-phone",
+        "value": "30svh",
+        "purpose": "Max photo height on phones so the board stays in view."
+      },
+      {
+        "name": "board-width-home",
+        "value": "46rem",
+        "purpose": "Service board cap on home."
+      },
+      {
+        "name": "board-width-services",
+        "value": "52rem",
+        "purpose": "Service board cap on /services/."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Book Button",
+      "kind": "button",
+      "refersTo": "button-book",
+      "description": "The one filled button; gold means book.",
+      "html": "<div class=\"ds-felt-wrap\"><a class=\"ds-btn-book\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/></svg>Book now</a></div>",
+      "css": ".ds-felt-wrap{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;padding:24px;} .ds-btn-book{display:inline-flex;align-items:center;justify-content:center;gap:0.55em;min-block-size:var(--tap,48px);padding:0.7rem 1.4rem;border:2px solid transparent;border-radius:var(--radius,4px);font-family:var(--font-board,'Barlow Condensed','Arial Narrow',sans-serif);font-weight:600;font-size:1.25rem;letter-spacing:0.045em;text-transform:uppercase;text-decoration:none;line-height:1;cursor:pointer;transition:background-color 220ms cubic-bezier(0.16,1,0.3,1),color 220ms cubic-bezier(0.16,1,0.3,1),border-color 220ms cubic-bezier(0.16,1,0.3,1);background:#d6a84e;color:#141312;box-shadow:0 4px 10px -4px rgb(0 0 0 / 0.45);} .ds-btn-book:hover{background:#e7c27a;} .ds-btn-book:focus-visible{outline:3px solid #d6a84e;outline-offset:3px;}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action on felt (Call, map load): peg-line border, peg-wash hover.",
+      "html": "<div class=\"ds-felt-wrap-g\"><a class=\"ds-btn-ghost\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z\"/></svg>Call</a></div>",
+      "css": ".ds-felt-wrap-g{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;padding:24px;} .ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:0.55em;min-block-size:var(--tap,48px);padding:0.7rem 1.4rem;border:2px solid transparent;border-radius:var(--radius,4px);font-family:var(--font-board,'Barlow Condensed','Arial Narrow',sans-serif);font-weight:600;font-size:1.25rem;letter-spacing:0.045em;text-transform:uppercase;text-decoration:none;line-height:1;cursor:pointer;transition:background-color 220ms cubic-bezier(0.16,1,0.3,1),color 220ms cubic-bezier(0.16,1,0.3,1),border-color 220ms cubic-bezier(0.16,1,0.3,1);background:transparent;color:#f2efe8;border-color:var(--peg-line,rgb(242 239 232 / 0.55));} .ds-btn-ghost:hover{border-color:#f2efe8;background:var(--peg-wash,rgb(242 239 232 / 0.08));} .ds-btn-ghost:focus-visible{outline:3px solid #d6a84e;outline-offset:3px;}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action on paper (Directions).",
+      "html": "<div class=\"ds-paper-wrap\"><a class=\"ds-btn-outline\" href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/></svg>Directions</a></div>",
+      "css": ".ds-paper-wrap{background:#f3f1ec;padding:24px;} .ds-btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:0.55em;min-block-size:var(--tap,48px);padding:0.7rem 1.4rem;border:2px solid transparent;border-radius:var(--radius,4px);font-family:var(--font-board,'Barlow Condensed','Arial Narrow',sans-serif);font-weight:600;font-size:1.25rem;letter-spacing:0.045em;text-transform:uppercase;text-decoration:none;line-height:1;cursor:pointer;transition:background-color 220ms cubic-bezier(0.16,1,0.3,1),color 220ms cubic-bezier(0.16,1,0.3,1),border-color 220ms cubic-bezier(0.16,1,0.3,1);background:transparent;color:#1b1a18;border-color:#1b1a18;} .ds-btn-outline:hover{background:#1b1a18;color:#f3f1ec;} .ds-btn-outline:focus-visible{outline:3px solid #7d5f17;outline-offset:3px;}"
+    },
+    {
+      "name": "Service Letterboard",
+      "kind": "custom",
+      "refersTo": "letterboard",
+      "description": "Signature object: framed felt board, peg letters, peg-faint dotted leaders, price over time in one right-hand column; capped at 46rem (52rem on /services/).",
+      "html": "<div class=\"ds-board\"><ul><li><div class=\"ds-line\"><span>Haircut</span><span class=\"ds-leader\"></span><span>$40</span></div><p class=\"ds-meta\"><span>Clipper and scissor cut, washed and styled.</span><span class=\"ds-time\">30 min</span></p></li><li><div class=\"ds-line\"><span>Skin fade</span><span class=\"ds-leader\"></span><span>$45</span></div><p class=\"ds-meta\"><span>Taken down to the skin, blended by hand.</span><span class=\"ds-time\">45 min</span></p></li></ul></div>",
+      "css": ".ds-board{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;border:12px solid #24221f;border-radius:4px;box-shadow:0 18px 40px -12px rgb(0 0 0 / 0.55),0 2px 6px rgb(0 0 0 / 0.35),inset 0 2px 10px rgb(0 0 0 / 0.6);padding:24px 32px;max-inline-size:46rem;} .ds-board ul{list-style:none;margin:0;padding:0;display:grid;gap:20px;} .ds-line{font-family:var(--font-board,'Barlow Condensed','Arial Narrow',sans-serif);font-weight:600;text-transform:uppercase;letter-spacing:0.045em;text-shadow:0 1px 0 rgb(0 0 0 / 0.65),0 2px 3px rgb(0 0 0 / 0.35);font-variant-numeric:tabular-nums lining-nums;display:flex;align-items:last baseline;gap:0.5rem;font-size:1.75rem;line-height:1.1;} .ds-leader{flex:1 1 1.5rem;min-inline-size:1.5rem;border-block-end:3px dotted var(--peg-faint,rgb(242 239 232 / 0.35));transform:translateY(-0.3em);} .ds-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0.25rem 0.9rem;margin:0.35rem 0 0;color:#a8a296;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:0.9375rem;} .ds-time{margin-inline-start:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.0625rem;letter-spacing:0.045em;text-transform:uppercase;color:#f2efe8;}"
+    },
+    {
+      "name": "Open Status Line",
+      "kind": "custom",
+      "refersTo": "letterboard",
+      "description": "Board line that turns gold only when the shop is open; re-evaluated every 60s.",
+      "html": "<div class=\"ds-felt-wrap-s\"><p class=\"ds-status ds-open\"><span class=\"ds-dot\"></span>Open now · Closes 7pm</p><p class=\"ds-status\"><span class=\"ds-dot\"></span>Closed · Opens Tue 9am</p></div>",
+      "css": ".ds-felt-wrap-s{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;padding:24px;} .ds-status{font-family:var(--font-board,'Barlow Condensed','Arial Narrow',sans-serif);font-weight:600;text-transform:uppercase;letter-spacing:0.045em;text-shadow:0 1px 0 rgb(0 0 0 / 0.65),0 2px 3px rgb(0 0 0 / 0.35);font-variant-numeric:tabular-nums lining-nums;display:flex;align-items:center;gap:0.6rem;margin:0 0 8px;font-size:1.375rem;color:#f2efe8;} .ds-dot{inline-size:0.6rem;block-size:0.6rem;border-radius:50%;background:#a8a296;} .ds-open{color:#d6a84e;} .ds-open .ds-dot{background:#d6a84e;}"
+    },
+    {
+      "name": "Page Intro",
+      "kind": "custom",
+      "refersTo": "page-intro",
+      "description": "Inner-page felt band: breadcrumb, single peg-letter H1, one-line intro.",
+      "html": "<section class=\"ds-intro\"><ol class=\"ds-crumbs\"><li><a href=\"#\">Home</a></li><li><span aria-current=\"page\">Services</span></li></ol><h1 class=\"ds-intro-h1\">Services and prices</h1><p class=\"ds-intro-p\">Every cut, what it costs, and how long it takes.</p></section>",
+      "css": ".ds-intro{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;padding:2.5rem 24px 4rem;border-block-end:1px solid #3a3733;} .ds-crumbs{display:flex;flex-wrap:wrap;list-style:none;margin:0 0 1rem;padding:0;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:0.9375rem;color:#a8a296;} .ds-crumbs li+li::before{content:\"/\";margin-inline:0.5rem;} .ds-crumbs a,.ds-crumbs span{display:inline-flex;align-items:center;min-block-size:44px;color:#a8a296;} .ds-crumbs a:hover{color:#f2efe8;} .ds-crumbs a:focus-visible{outline:3px solid #d6a84e;outline-offset:3px;} .ds-intro-h1{margin:0;max-inline-size:18ch;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.045em;line-height:1.02;font-size:clamp(2.75rem,1.9rem + 4.4vw,5.25rem);text-shadow:0 1px 0 rgb(0 0 0 / 0.65),0 2px 3px rgb(0 0 0 / 0.35);} .ds-intro-p{margin:1rem 0 0;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:clamp(1.125rem,1.05rem + 0.35vw,1.3125rem);color:#a8a296;}"
+    },
+    {
+      "name": "Receipt Slip",
+      "kind": "card",
+      "refersTo": "receipt-slip",
+      "description": "Review card: paper slip with a perforated top edge.",
+      "html": "<div class=\"ds-alt-wrap\"><figure class=\"ds-slip\"><blockquote>A real Google review, quoted word for word.</blockquote><figcaption>First name · Month year · Google</figcaption></figure></div>",
+      "css": ".ds-alt-wrap{background:#ebe7de;padding:24px;} .ds-slip{margin:0;background:#f3f1ec;color:#1b1a18;padding:1.5rem;border-radius:0 0 4px 4px;box-shadow:0 10px 24px -14px rgb(27 26 24 / 0.35);border-block-start:2px dashed #d9d4c9;display:grid;gap:1rem;max-inline-size:22rem;} .ds-slip blockquote{margin:0;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:1.1875rem;line-height:1.5;} .ds-slip figcaption{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.0625rem;letter-spacing:0.045em;text-transform:uppercase;color:#5f5a52;}"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Felt header: wordmark, caps nav, gold underline on the current page.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">Conejo Barber</a><a href=\"#\">Services</a><a href=\"#\" aria-current=\"page\">Barber</a><a href=\"#\">Reviews</a><a href=\"#\">Visit</a></nav>",
+      "css": ".ds-nav{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;display:flex;align-items:center;gap:1.5rem;padding:0 24px;border-block-end:1px solid #3a3733;} .ds-nav a{display:inline-flex;align-items:center;min-block-size:48px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.125rem;letter-spacing:0.045em;text-transform:uppercase;text-decoration:none;color:#a8a296;} .ds-nav a:hover,.ds-nav a[aria-current=\"page\"]{color:#f2efe8;} .ds-nav a[aria-current=\"page\"]{text-decoration:underline;text-decoration-color:#d6a84e;text-decoration-thickness:2px;text-underline-offset:0.35em;} .ds-nav .ds-brand{font-family:var(--font-board,'Barlow Condensed','Arial Narrow',sans-serif);font-weight:600;text-transform:uppercase;letter-spacing:0.045em;text-shadow:0 1px 0 rgb(0 0 0 / 0.65),0 2px 3px rgb(0 0 0 / 0.35);font-variant-numeric:tabular-nums lining-nums;font-size:1.75rem;color:#f2efe8;margin-inline-end:auto;} .ds-nav a:focus-visible{outline:3px solid #d6a84e;outline-offset:3px;}"
+    },
+    {
+      "name": "Mobile Action Bar",
+      "kind": "nav",
+      "refersTo": "action-bar-book",
+      "description": "Phones only: Book | Call | Directions under the thumb.",
+      "html": "<nav class=\"ds-bar\"><a class=\"ds-act ds-act-book\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/></svg><span>Book</span></a><a class=\"ds-act\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z\"/></svg><span>Call</span></a><a class=\"ds-act\" href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/></svg><span>Directions</span></a></nav>",
+      "css": ".ds-bar{background:repeating-linear-gradient(to bottom,#141312 0 5px,#1c1b19 5px 7px);background-color:#141312;color:#f2efe8;display:grid;grid-template-columns:1.2fr 1fr 1fr;block-size:64px;max-inline-size:390px;border-block-start:1px solid #3a3733;box-shadow:0 -8px 24px -12px rgb(0 0 0 / 0.6);} .ds-act{display:flex;align-items:center;justify-content:center;gap:0.4rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.125rem;letter-spacing:0.045em;text-transform:uppercase;text-decoration:none;color:#f2efe8;} .ds-act+.ds-act{border-inline-start:1px solid #3a3733;} .ds-act-book{background:#d6a84e;color:#141312;} .ds-act-book:hover{background:#e7c27a;} .ds-act:focus-visible{outline:3px solid #d6a84e;outline-offset:-4px;}"
+    },
+    {
+      "name": "TODO Placeholder",
+      "kind": "chip",
+      "refersTo": "todo-chip",
+      "description": "Visible stand-in for a fact the owner has not supplied (8.3:1); unresolved links get a dashed outline. Dev scaffolding.",
+      "html": "<div class=\"ds-paper-wrap-t\"><span class=\"ds-todo\">TODO: phone</span><p class=\"ds-todo-block\">TODO: shop story, 2–3 short paragraphs</p><a class=\"ds-todo-link\" href=\"#\" data-todo=\"phone\">Call</a></div>",
+      "css": ".ds-paper-wrap-t{background:#f3f1ec;padding:24px;display:grid;gap:12px;justify-items:start;} .ds-todo{display:inline-block;background:#fff3c4;color:#5c4400;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:0.9rem;font-weight:700;padding:0.2em 0.5em;border-radius:2px;line-height:1.4;} .ds-todo-block{margin:0;background:#fff3c4;color:#5c4400;border:1px dashed #5c4400;padding:1rem 1.5rem;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-weight:700;max-inline-size:65ch;} .ds-todo-link{color:#7d5f17;outline:2px dashed #fff3c4;outline-offset:3px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Price Board",
+    "overview": "The site is the shop's black felt letterboard. Facts a customer needs before sitting in the chair (open status, prices, durations, hours, the closing call to book) are set as peg-white condensed capitals on ribbed black felt, inside square-cornered frames. Everything conversational (reviews, the barber, FAQs, location) sits on warm receipt paper in plain ink. Photos carry the promise of the cut; the board carries the facts.\n\nThe palette is black and gold. Felt and paper do almost all the work; gold appears only where the visitor can book, and when the shop is open right now. Density is low and phone-first: one column on phones, generous section rhythm, large tap targets, and a sticky Book | Call | Directions bar under the thumb. Depth is physical rather than digital: boards cast a heavy drop shadow and an inset shade, peg letters sit slightly proud of the felt, receipt slips lift a little off the page.\n\nThe world rejects the moody vintage barbershop (pole stripes, script gold serifs) and the white spa-salon.",
+    "keyCharacteristics": [
+      "Ribbed black felt (a 7px repeating horizontal groove) for every dark surface.",
+      "Peg letters: Barlow Condensed 600, uppercase, tracked 0.045em, tabular lining figures, a two-layer text shadow.",
+      "Receipt-paper light sections in two alternating tones, ink text, hairline rules.",
+      "One gold, reserved for Book and the open state; a darker bronze carries gold-family text on paper.",
+      "Dotted leaders tie each service name to its price.",
+      "Atkinson Hyperlegible for every sentence of body copy."
+    ],
+    "rules": [
+      {
+        "name": "The One Gold Rule",
+        "body": "Gold (`gold`) means \"book\" or \"open now\", plus the active-state signals that point at them (focus ring on felt, current nav underline, hover on felt links). It never decorates a heading, an icon, a border, or a background panel. On phones the header Book is hidden so the action bar's gold cell is the only gold button in view.",
+        "section": "colors"
+      },
+      {
+        "name": "The Bronze Translation Rule",
+        "body": "Gold text never sits on paper; on paper the gold family is `gold-ink`. Gold on paper fails contrast.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role Pair Rule",
+        "body": "Text colors come in pairs with their surface: peg / peg-muted on felt, ink / ink-muted on paper, on-gold on gold. Never cross a pair onto the other material.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Raw Color Rule",
+        "body": "Every color, including a translucent one, is a role token in `tokens.css`. A tint of peg is `peg-faint`, `peg-line`, or `peg-wash`, never an inline `rgb()`. Shadows are the only raw colors, and they are black or ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The Peg Letter Rule",
+        "body": "Condensed caps are for facts and headings only, always uppercase, always 600, tracked 0.045em when set as a board line. Sentences are never set in Barlow Condensed.",
+        "section": "typography"
+      },
+      {
+        "name": "The Straight Column Rule",
+        "body": "Prices, times, and hours use tabular lining figures so they read down a column.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hung Object Rule",
+        "body": "Only letterboards get the board drop. Paper sections, cards, and photos stay flat; a shadow means a physical object.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** set every fact (status, price, time, hours, rating) as peg letters on ribbed felt inside a framed board.",
+      "**Do** use `gold` only for Book and the open state, with `on-gold` text on it (8.5:1).",
+      "**Do** use `gold-ink` whenever gold-family text lands on paper (5.3:1 on paper).",
+      "**Do** pair a service name to its price with a dotted leader and tabular lining figures.",
+      "**Do** keep sentences in Atkinson Hyperlegible, capped at 65ch.",
+      "**Do** keep every tap target at least 48px and keep Book reachable in the first viewport and in the phone action bar.",
+      "**Do** keep missing facts visible as \"TODO:\" chips or blocks rather than inventing them.",
+      "**Do** reference colors only through the role tokens in `tokens.css`, including the translucent peg tints."
+    ],
+    "donts": [
+      "**Don't** put gold on headings, icons, borders, decorative panels, or paper-section text.",
+      "**Don't** set body sentences in Barlow Condensed, or set Barlow Condensed in lowercase.",
+      "**Don't** give paper sections or photos the board drop shadow; only hung boards cast it.",
+      "**Don't** reach for barber poles, stripes, or script gold serifs; the world rejects the vintage-barbershop costume.",
+      "**Don't** go white-and-airy spa-salon; light sections are warm receipt paper with ink.",
+      "**Don't** add entrance or scroll-triggered animation; motion is state feedback plus the single gallery push-in.",
+      "**Don't** give the Book button a gold glow; its lift is a neutral drop shadow.",
+      "**Don't** use sticky-note yellow for anything except TODO placeholders."
+    ]
+  }
+}

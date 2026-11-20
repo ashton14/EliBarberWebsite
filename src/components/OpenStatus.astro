@@ -1,0 +1,123 @@
+---
+// Live "Open now · Closes 7pm" line. Server-rendered fallback is a link to
+// the hours table; a ~1 KB script upgrades it using shop time
+// (America/Los_Angeles), whatever the visitor's own time zone is.
+import { DAYS, SITE } from "../config/site";
+import { formatTime, hoursKnown } from "../lib/format";
+import Todo from "./Todo.astro";
+
+// Pre-format everything at build time so the script only picks strings.
+const week = DAYS.map((d) => {
+  const h = SITE.hours[d];
+  if (h === null || h === "closed") return null;
+  return { o: h.opens, c: h.closes, ot: formatTime(h.opens), ct: formatTime(h.closes) };
+});
+
+const strings = {
+  open: SITE.ui.openNow,
+  closed: SITE.ui.closedNow,
+  closesAt: SITE.ui.closesAt,
+  opensAt: SITE.ui.opensAt,
+  today: SITE.ui.today,
+  days: DAYS.map((d) => d.slice(0, 3)),
+};
+---
+
+{
+  hoursKnown ? (
+    <p class="open-status peg" data-week={JSON.stringify(week)} data-tz={SITE.business.timeZone} data-strings={JSON.stringify(strings)}>
+      <span class="dot" aria-hidden="true" />
+      <a href="/#hours" class="status-text">{SITE.ui.hoursSeeAll}</a>
+    </p>
+  ) : (
+    <p class="open-status peg">
+      <Todo label="opening hours" />
+    </p>
+  )
+}
+
+<script>
+  type Day = { o: string; c: string; ot: string; ct: string } | null;
+  const el = document.querySelector<HTMLElement>(".open-status[data-week]");
+  if (el) {
+    const week: Day[] = JSON.parse(el.dataset.week ?? "[]");
+    const s = JSON.parse(el.dataset.strings ?? "{}");
+    const fmt = new Intl.DateTimeFormat("en-US", {
+      timeZone: el.dataset.tz,
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    });
+    // Closing time at or before opening time means "closes after midnight".
+    const overnight = (d: Day) => !!d && d.c <= d.o;
+    const update = () => {
+      const parts = fmt.formatToParts(new Date());
+      const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
+      const today = s.days.indexOf(get("weekday")); // 0 = Monday
+      const now = `${get("hour")}:${get("minute")}`;
+      const d = week[today];
+      const y = week[(today + 6) % 7];
+      let open: Day = null;
+      if (d && now >= d.o && (overnight(d) || now < d.c)) open = d;
+      else if (y && overnight(y) && now < y.c) open = y;
+      let text = "";
+      if (open) {
+        text = `${s.open} · ${s.closesAt.replace("{time}", open.ct)}`;
+      } else {
+        for (let i = 0; i < 7; i++) {
+          const n = week[(today + i) % 7];
+          if (!n || (i === 0 && now >= n.o)) continue;
+          const when = i === 0 ? s.today : s.days[(today + i) % 7];
+          text = `${s.closed} · ${s.opensAt.replace("{day}", when).replace("{time}", n.ot)}`;
+          break;
+        }
+        if (!text) text = s.closed;
+      }
+      el.classList.toggle("is-open", !!open);
+      const target = el.querySelector(".status-text");
+      if (target) target.textContent = text;
+    };
+    update();
+    // Stay correct for visitors who leave the tab open or come back later.
+    setInterval(update, 60_000);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") update();
+    });
+  }
+</script>
+
+<style>
+  .open-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: var(--text-board);
+    color: var(--peg);
+  }
+
+  .status-text {
+    color: inherit;
+    text-decoration: none;
+    min-block-size: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .dot {
+    inline-size: 0.6rem;
+    block-size: 0.6rem;
+    border-radius: 50%;
+    background: var(--peg-muted);
+    flex: none;
+  }
+
+  .is-open {
+    color: var(--gold);
+  }
+
+  .is-open .dot {
+    background: var(--gold);
+  }
+</style>

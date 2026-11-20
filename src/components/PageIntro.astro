@@ -1,0 +1,82 @@
+---
+// Inner-page header band: visible breadcrumb (mirrors the BreadcrumbList
+// schema), the page's single H1 in peg letters, and a one-line intro.
+import type { Crumb } from "../lib/schema";
+
+interface Props {
+  title: string;
+  intro?: string;
+  crumbs: Crumb[];
+}
+
+const { title, intro, crumbs } = Astro.props;
+---
+
+<section class="page-intro on-felt" aria-labelledby="page-title">
+  <div class="container">
+    <nav aria-label="Breadcrumb">
+      <ol class="crumbs">
+        {
+          crumbs.map((c, i) => (
+            <li>
+              {i < crumbs.length - 1 ? <a href={c.path}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <h1 id="page-title" class="peg">{title}</h1>
+    {intro && <p class="intro">{intro}</p>}
+  </div>
+</section>
+
+<style>
+  .page-intro {
+    padding-block: var(--space-4) var(--space-5);
+    border-block-end: 1px solid var(--felt-line);
+  }
+
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0 0 var(--space-2);
+    padding: 0;
+    font-size: var(--text-sm);
+    color: var(--peg-muted);
+  }
+
+  .crumbs li + li::before {
+    content: "/";
+    margin-inline: 0.5rem;
+    color: var(--peg-muted);
+  }
+
+  .crumbs a {
+    color: var(--peg-muted);
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  .crumbs a:hover {
+    color: var(--peg);
+  }
+
+  .crumbs span {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  h1 {
+    color: var(--peg);
+    max-inline-size: 18ch;
+  }
+
+  .intro {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-lg);
+    color: var(--peg-muted);
+  }
+</style>

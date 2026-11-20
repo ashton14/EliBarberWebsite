@@ -1,0 +1,329 @@
+/* ============================================================================
+   GLOBAL STYLES — reset, fonts, layout primitives and the letterboard system.
+   Colors and sizes come from tokens.css only.
+   ========================================================================= */
+@import "./tokens.css";
+
+/* Fonts: @font-face rules live in src/layouts/Base.astro (they need the
+   hashed file URLs that Vite gives the ?url imports, which also feed the preload). */
+
+/* --- Reset --------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-block-start: 5rem; /* anchors clear the sticky header */
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-inline-size: 100%;
+}
+
+img {
+  block-size: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-board);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+  margin-block-end: var(--space-3);
+}
+
+h3 {
+  font-size: var(--text-h3);
+  letter-spacing: 0.01em;
+}
+
+p {
+  margin: 0 0 var(--space-2);
+  max-inline-size: var(--prose-width);
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--gold-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+/* --- Browser surfaces, themed -------------------------------------------- */
+::selection {
+  background: var(--gold);
+  color: var(--on-gold);
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-felt :focus-visible,
+.on-felt:focus-visible {
+  outline-color: var(--gold);
+}
+
+html {
+  accent-color: var(--gold-ink);
+  scrollbar-color: var(--ink-muted) var(--paper-alt);
+}
+
+/* --- Skip link -------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--space-2);
+  inset-block-start: -100px;
+  z-index: 100;
+  background: var(--gold);
+  color: var(--on-gold);
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  inset-block-start: var(--space-2);
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Layout primitives ---------------------------------------------------- */
+.container {
+  inline-size: 100%;
+  max-inline-size: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.section--alt {
+  background: var(--paper-alt);
+}
+
+/* Dark sections are black felt with its horizontal ribbing */
+.on-felt {
+  background: var(--felt-texture);
+  background-color: var(--felt);
+  color: var(--peg);
+}
+
+.on-felt a {
+  color: var(--peg);
+}
+
+.on-felt a:hover {
+  color: var(--gold-hover);
+}
+
+.section-intro {
+  color: var(--ink-muted);
+  font-size: var(--text-lg);
+  margin-block: calc(var(--space-2) * -1) var(--space-4);
+}
+
+.on-felt .section-intro {
+  color: var(--peg-muted);
+}
+
+/* "Full menu →" style links: an action in words, with a drawn arrow */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-block-size: var(--tap);
+  font-weight: 700;
+  color: var(--gold-ink);
+}
+
+.text-link svg {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.text-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* --- Letterboard: the page's signature object ------------------------------ */
+/* A framed felt panel. Lines inside it are set in peg letters (.peg). */
+.board {
+  background: var(--felt-texture);
+  background-color: var(--felt);
+  color: var(--peg);
+  border: var(--frame) solid var(--felt-raised);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-board), inset 0 2px 10px rgb(0 0 0 / 0.6);
+}
+
+/* Peg letters: condensed caps that sit slightly proud of the felt */
+.peg {
+  font-family: var(--font-board);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-board);
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.65), 0 2px 3px rgb(0 0 0 / 0.35);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* --- Buttons --------------------------------------------------------------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  min-block-size: var(--tap);
+  padding: 0.7rem 1.4rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font-family: var(--font-board);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: var(--tracking-board);
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+/* Primary: the one gold thing. Means "book". */
+.button--book {
+  background: var(--gold);
+  color: var(--on-gold);
+  box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.45);
+}
+
+.button--book:hover,
+.on-felt .button--book:hover {
+  background: var(--gold-hover);
+  color: var(--on-gold);
+}
+
+.on-felt .button--book {
+  color: var(--on-gold);
+}
+
+/* Secondary on felt: outlined in peg white */
+.button--ghost {
+  background: transparent;
+  color: var(--peg);
+  border-color: var(--peg-line);
+}
+
+.button--ghost:hover,
+.on-felt .button--ghost:hover {
+  border-color: var(--peg);
+  background: var(--peg-wash);
+  color: var(--peg);
+}
+
+/* Secondary on paper */
+.button--outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.button--outline:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --- TODO placeholders (visible until real facts are filled in) --------------- */
+.todo {
+  display: inline-block;
+  background: var(--todo-bg);
+  color: var(--todo-ink);
+  font-family: var(--font-body);
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+  padding: 0.2em 0.5em;
+  border-radius: 2px;
+  line-height: 1.4;
+}
+
+/* A link whose destination is still TODO: dashed outline in review builds */
+[data-todo] {
+  outline: 2px dashed var(--todo-bg);
+  outline-offset: 3px;
+}
+
+.todo-block {
+  display: block;
+  background: var(--todo-bg);
+  color: var(--todo-ink);
+  border: 1px dashed var(--todo-ink);
+  padding: var(--space-2) var(--space-3);
+  font-weight: 700;
+  max-inline-size: var(--prose-width);
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

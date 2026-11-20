@@ -1,0 +1,48 @@
+---
+// Home page: every section, in order. Reordering = moving one line.
+import { getImage } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { SITE } from "../config/site";
+import { HERO_SIZES, HERO_WIDTHS, photo } from "../lib/media";
+import Hero from "../components/sections/Hero.astro";
+import TrustStrip from "../components/sections/TrustStrip.astro";
+import Services from "../components/sections/Services.astro";
+import Gallery from "../components/sections/Gallery.astro";
+import Barbers from "../components/sections/Barbers.astro";
+import Reviews from "../components/sections/Reviews.astro";
+import About from "../components/sections/About.astro";
+import Faq from "../components/sections/Faq.astro";
+import PracticalInfo from "../components/sections/PracticalInfo.astro";
+import CtaBanner from "../components/sections/CtaBanner.astro";
+
+// Preload the exact AVIF candidates the hero <Picture> will choose from.
+const heroPreload = await getImage({
+  src: photo(SITE.hero.photo),
+  format: "avif",
+  widths: HERO_WIDTHS,
+  sizes: HERO_SIZES,
+  quality: 62,
+});
+---
+
+<Base title={SITE.pages.home.title} description={SITE.pages.home.description} withFaq>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/avif"
+    imagesrcset={heroPreload.srcSet.attribute}
+    imagesizes={HERO_SIZES}
+    fetchpriority="high"
+  />
+  <Hero />
+  <TrustStrip />
+  <Services />
+  <Gallery />
+  <Barbers />
+  <Reviews />
+  <About />
+  <Faq />
+  <PracticalInfo />
+  <CtaBanner />
+</Base>

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "src/styles/tokens.css"
+        ],
+        "createdAt": "2026-11-20T01:11:49.706Z",
+        "reason": "user chose direction A 'Price Board' whose preview specified paper #f3f1ec as the light section color"
+      }
+    ]
+  }
+}

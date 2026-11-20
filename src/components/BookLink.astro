@@ -1,0 +1,27 @@
+---
+// The primary action. One component so every "Book" on the site points at
+// the same booking link (or a barber's own link when given).
+// Until the booking URL exists it links to the page's TODO anchor, so the
+// button still renders and the gap stays obvious in review.
+import { SITE } from "../config/site";
+import Icon from "./Icon.astro";
+
+interface Props {
+  label?: string;
+  href?: string | null;
+  class?: string;
+  icon?: boolean;
+}
+
+const { label = SITE.ui.bookNow, href, class: className, icon = true } = Astro.props;
+const url = href ?? SITE.business.bookingUrl;
+---
+
+<a
+  class:list={["button", "button--book", className]}
+  href={url ?? "#todo-booking-url"}
+  data-todo={url ? undefined : "booking URL"}
+>
+  {icon && <Icon name="calendar" size={20} />}
+  {label}
+</a>

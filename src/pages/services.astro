@@ -1,0 +1,74 @@
+---
+// /services/ — the full menu on the letterboard, then the practical notes
+// people ask before booking (payment, walk-ins).
+import Base from "../layouts/Base.astro";
+import { SITE } from "../config/site";
+import PageIntro from "../components/PageIntro.astro";
+import ServiceBoard from "../components/ServiceBoard.astro";
+import BookLink from "../components/BookLink.astro";
+import CrossLinks from "../components/CrossLinks.astro";
+import Todo from "../components/Todo.astro";
+import CtaBanner from "../components/sections/CtaBanner.astro";
+
+const { pages, inner, services, business, ui } = SITE;
+const crumbs = [
+  { name: inner.home, path: "/" },
+  { name: inner.services.h1, path: "/services/" },
+];
+---
+
+<Base title={pages.services.title} description={pages.services.description} breadcrumbs={crumbs}>
+  <PageIntro title={inner.services.h1} intro={inner.services.intro} crumbs={crumbs} />
+
+  <section class="section" aria-label={services.title}>
+    <div class="container menu">
+      <ServiceBoard items={services.items} level={2} />
+      <div class="menu-actions">
+        <BookLink />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="details-title">
+    <div class="container">
+      <h2 id="details-title">{inner.services.detailsTitle}</h2>
+      <div class="details">
+        <div>
+          <h3>{inner.services.paymentTitle}</h3>
+          <p>{business.payment ? business.payment.join(", ") : <Todo label="payment methods" />}</p>
+        </div>
+        <div>
+          <h3>{inner.services.walkInsTitle}</h3>
+          <p>
+            {business.walkIns === null ? <Todo label="walk-ins?" /> : business.walkIns ? ui.walkInsWelcome : ui.appointmentsOnly}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CrossLinks current="services" />
+  <CtaBanner />
+</Base>
+
+<style>
+  /* Board shares the H1's left edge; a real letterboard stays narrow */
+  .menu {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .menu > :global(*) {
+    max-inline-size: 52rem;
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  h3 {
+    margin-block-end: var(--space-1);
+  }
+</style>

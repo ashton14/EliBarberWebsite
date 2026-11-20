@@ -1,0 +1,48 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../config/site";
+import { telHref } from "../lib/format";
+import BookLink from "../components/BookLink.astro";
+import Icon from "../components/Icon.astro";
+
+const call = telHref(SITE.business.phone);
+---
+
+<Base title={SITE.pages.notFound.title} description={SITE.pages.notFound.description} noindex>
+  <section class="section">
+    <div class="container">
+      <h1>{SITE.ui.notFoundTitle}</h1>
+      <p class="lede">{SITE.ui.notFoundText}</p>
+      <div class="actions">
+        <BookLink />
+        <a class="button button--outline" href={call ?? "#todo-phone"} data-todo={call ? undefined : "phone"}>
+          <Icon name="phone" size={20} />
+          {SITE.ui.call}
+        </a>
+        <a class="text-link" href="/">
+          {SITE.ui.notFoundHome}
+          <Icon name="arrow" size={20} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    margin-block-end: var(--space-2);
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-block-start: var(--space-3);
+  }
+</style>

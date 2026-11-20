@@ -1,0 +1,121 @@
+---
+// Practical info: hours, address (exactly as on Google), click-to-load map,
+// directions, and the areas clients come from.
+import { SITE } from "../../config/site";
+import { directionsUrl, telHref } from "../../lib/format";
+import Address from "../Address.astro";
+import HoursTable from "../HoursTable.astro";
+import Icon from "../Icon.astro";
+import MapFacade from "../MapFacade.astro";
+import Todo from "../Todo.astro";
+
+interface Props {
+  /** false on /visit/ itself (no link to the page you are on) */
+  showVisitLink?: boolean;
+  /** Optional intro above the areas list */
+  areasIntro?: string;
+  /** Section heading override (the /visit/ page already says "Hours" in its H1) */
+  title?: string;
+}
+
+const { showVisitLink = true, areasIntro, title } = Astro.props;
+const { business, ui, info } = SITE;
+const directions = directionsUrl();
+const call = telHref(business.phone);
+---
+
+<section id="visit" class="section" aria-labelledby="visit-title">
+  <div class="container">
+    <h2 id="visit-title">{title ?? info.title}</h2>
+    <div class="visit-grid">
+      <div id="hours" class="visit-hours">
+        <h3>{ui.hoursTitle}</h3>
+        <HoursTable caption={ui.hoursTitle} />
+      </div>
+
+      <div class="visit-where">
+        <h3>{ui.addressTitle}</h3>
+        <Address />
+        <p class="visit-phone">
+          {call ? <a href={call}>{business.phoneDisplay ?? business.phone}</a> : <Todo label="phone" />}
+        </p>
+        <MapFacade />
+        <p class="visit-actions">
+          {
+            directions ? (
+              <a class="button button--outline" href={directions} rel="noopener">
+                <Icon name="pin" size={20} />
+                {ui.directions}
+              </a>
+            ) : (
+              <Todo label="address (for directions)" />
+            )
+          }
+        </p>
+        {business.parking ? <p class="visit-parking">{business.parking}</p> : <p><Todo label="parking / landmarks" /></p>}
+      </div>
+    </div>
+
+    <div class="areas">
+      <h3>{ui.areasServedTitle}</h3>
+      {areasIntro && <p class="areas-intro">{areasIntro}</p>}
+      <ul>
+        {business.areasServed.map((a) => <li>{a}</li>)}
+      </ul>
+      {
+        showVisitLink && (
+          <a class="text-link" href="/visit/">
+            {ui.visitPageLink}
+            <Icon name="arrow" size={20} />
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .visit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  h3 {
+    margin-block-end: var(--space-2);
+  }
+
+  .visit-phone {
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+
+  .visit-actions {
+    margin-block: var(--space-2);
+  }
+
+  .visit-parking {
+    color: var(--ink-muted);
+  }
+
+  .areas {
+    margin-block-start: var(--space-5);
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--paper-line);
+  }
+
+  .areas ul {
+    list-style: none;
+    margin: 0 0 var(--space-2);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem var(--space-3);
+    font-family: var(--font-board);
+    font-weight: 600;
+    font-size: var(--text-board);
+    letter-spacing: var(--tracking-board);
+    text-transform: uppercase;
+  }
+</style>

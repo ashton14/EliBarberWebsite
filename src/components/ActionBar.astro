@@ -1,0 +1,103 @@
+---
+// Phones only: a sticky bottom bar with Book | Call | Directions.
+// Pure CSS, no JavaScript. 64px tall, each target spans a third of the
+// screen. Missing facts render as disabled items marked TODO.
+import { SITE } from "../config/site";
+import { directionsUrl, telHref } from "../lib/format";
+import Icon from "./Icon.astro";
+
+const book = SITE.business.bookingUrl;
+const call = telHref(SITE.business.phone);
+const directions = directionsUrl();
+---
+
+<nav class="action-bar on-felt" aria-label={SITE.ui.quickActions}>
+  <a class="action action--book" href={book ?? "#todo-booking-url"} data-todo={book ? undefined : "booking URL"}>
+    <Icon name="calendar" size={22} />
+    <span>{SITE.ui.book}</span>
+  </a>
+  <a class="action" href={call ?? "#todo-phone"} data-todo={call ? undefined : "phone"}>
+    <Icon name="phone" size={22} />
+    <span>{SITE.ui.call}</span>
+  </a>
+  <a
+    class="action"
+    href={directions ?? "#todo-address"}
+    data-todo={directions ? undefined : "address"}
+    rel={directions ? "noopener" : undefined}
+  >
+    <Icon name="pin" size={22} />
+    <span>{SITE.ui.directions}</span>
+  </a>
+</nav>
+
+<style>
+  .action-bar {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    block-size: calc(var(--action-bar-h) + env(safe-area-inset-bottom, 0px));
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+    border-block-start: 1px solid var(--felt-line);
+    box-shadow: 0 -8px 24px -12px rgb(0 0 0 / 0.6);
+  }
+
+  .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-block-size: var(--tap);
+    padding-inline: 0.25rem;
+    font-family: var(--font-board);
+    font-weight: 600;
+    font-size: clamp(1rem, 0.75rem + 1.2vw, 1.1875rem);
+    letter-spacing: var(--tracking-board);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--peg);
+  }
+
+  .action + .action {
+    border-inline-start: 1px solid var(--felt-line);
+  }
+
+  .on-felt .action--book,
+  .action--book {
+    background: var(--gold);
+    color: var(--on-gold);
+  }
+
+  .on-felt .action--book:hover {
+    background: var(--gold-hover);
+    color: var(--on-gold);
+  }
+
+  .action:focus-visible {
+    outline-offset: -4px;
+  }
+
+  /* Reserve room so the bar never covers the footer's last line */
+  :global(body) {
+    padding-block-end: calc(var(--action-bar-h) + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (min-width: 48rem) {
+    .action-bar {
+      display: none;
+    }
+
+    :global(body) {
+      padding-block-end: 0;
+    }
+  }
+
+  @media print {
+    .action-bar {
+      display: none;
+    }
+  }
+</style>

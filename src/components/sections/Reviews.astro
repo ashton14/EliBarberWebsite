@@ -1,0 +1,174 @@
+---
+// Reviews: 3–6 real Google reviews, word for word, with first name + date.
+// Displayed visually only. No review/aggregateRating schema (Google treats
+// self-hosted reviews on a LocalBusiness as self-serving).
+// Each review is a receipt-paper slip; the real Google rating, when known,
+// sits above them as one letterboard line.
+import { SITE } from "../../config/site";
+import { fill } from "../../lib/format";
+import BookLink from "../BookLink.astro";
+import Icon from "../Icon.astro";
+import Todo from "../Todo.astro";
+
+const { reviews, business, ui } = SITE;
+const dateFmt = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+const rating = business.googleRating;
+const count = reviews.items.length;
+// 3 and 6 fill three columns; 2, 4 and 5 read better in two.
+const cols = count % 3 === 0 ? 3 : 2;
+---
+
+<section id="reviews" class="section section--alt" aria-labelledby="reviews-title">
+  <div class="container">
+    <h2 id="reviews-title">{reviews.title}</h2>
+    {
+      rating && (
+        <p class="board rating-board peg">
+          <Icon name="star" size={22} />
+          {fill(ui.reviewsBoard, { rating: rating.value.toFixed(1), count: String(rating.count) })}
+        </p>
+      )
+    }
+    {
+      count === 0 ? (
+        <Todo block label="paste 3 or 6 real Google reviews word for word (first name + date) into site.ts → reviews.items" />
+      ) : (
+        <ul class="review-list" style={`--cols: ${cols}`}>
+          {reviews.items.map((r) => (
+            <li class="slip">
+              <figure>
+                <p class="stars" role="img" aria-label={`${r.rating} ${ui.ratingOutOf}`}>
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <span class:list={["star", { off: n > r.rating }]}>
+                      <Icon name="star" size={16} />
+                    </span>
+                  ))}
+                </p>
+                <blockquote>
+                  <p>{r.text}</p>
+                </blockquote>
+                <figcaption>
+                  {r.author} · <time datetime={r.date}>{dateFmt.format(new Date(r.date))}</time> · {ui.reviewSource}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <div class="reviews-actions">
+      <BookLink />
+      {
+        business.googleProfileUrl ? (
+          <a class="text-link" href={business.googleProfileUrl} rel="noopener">
+            {ui.readAllReviews}
+            <Icon name="arrow" size={20} />
+          </a>
+        ) : (
+          <Todo label="Google profile URL for 'Read all reviews'" />
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .rating-board {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.25rem;
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-board);
+    max-inline-size: none;
+  }
+
+  .review-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 48rem) {
+    .review-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .review-list {
+      grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+    }
+  }
+
+  /* A slip of receipt paper: ink on paper, a perforated top edge */
+  .slip {
+    background: var(--paper);
+    padding: var(--space-3);
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow-paper);
+    border-block-start: 2px dashed var(--paper-line);
+  }
+
+  figure {
+    margin: 0;
+    display: grid;
+    gap: var(--space-2);
+    block-size: 100%;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .stars :global(svg) {
+    fill: currentColor;
+  }
+
+  .star.off {
+    color: var(--paper-line);
+  }
+
+  blockquote {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: 1.5;
+  }
+
+  blockquote p {
+    margin: 0;
+    text-indent: -0.42em; /* hang the opening quote mark */
+  }
+
+  blockquote p::before {
+    content: "\201C";
+  }
+
+  blockquote p::after {
+    content: "\201D";
+  }
+
+  figcaption {
+    font-family: var(--font-board);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: var(--tracking-board);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .reviews-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    margin-block-start: var(--space-4);
+  }
+</style>

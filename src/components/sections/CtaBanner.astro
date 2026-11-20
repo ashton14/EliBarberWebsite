@@ -1,0 +1,39 @@
+---
+// Closing call to action: one last letterboard line and the Book button.
+import { SITE } from "../../config/site";
+import BookLink from "../BookLink.astro";
+
+const { ctaBanner } = SITE;
+---
+
+<section class="cta on-felt" aria-labelledby="cta-title">
+  <div class="container cta-inner">
+    <h2 id="cta-title" class="peg">{ctaBanner.title}</h2>
+    <p>{ctaBanner.text}</p>
+    <BookLink />
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--space-section);
+    border-block-start: 1px solid var(--felt-line);
+  }
+
+  .cta-inner {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--peg);
+  }
+
+  p {
+    color: var(--peg-muted);
+    font-size: var(--text-lg);
+    margin: 0 0 var(--space-1);
+  }
+</style>

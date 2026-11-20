@@ -1,0 +1,113 @@
+---
+// The signature object: a framed felt letterboard listing services.
+// Name ····· price on one line, time and description under it. Prices and
+// times use tabular figures so the column reads straight down.
+// Used on the home page (popular items) and /services/ (all items).
+import type { Service } from "../config/site";
+import { formatMinutes, formatPrice } from "../lib/format";
+import Todo from "./Todo.astro";
+
+interface Props {
+  items: Service[];
+  /** Heading level for item names (3 under a section h2) */
+  level?: 2 | 3;
+}
+
+const { items, level = 3 } = Astro.props;
+const Heading = `h${level}` as "h2" | "h3";
+---
+
+<div class="board service-board">
+  <ul>
+    {
+      items.map((s) => {
+        const price = formatPrice(s.price, s.priceFrom);
+        const time = formatMinutes(s.minutes);
+        return (
+          <li>
+            <div class="line peg">
+              <Heading class="name">{s.name}</Heading>
+              <span class="leader" aria-hidden="true" />
+              <span class="price">{price ?? <Todo label="price" />}</span>
+            </div>
+            <p class="meta">
+              <span class="desc">{s.description ?? <Todo label="description" />}</span>
+              <span class="time">{time ?? <Todo label="time" />}</span>
+            </p>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .service-board {
+    padding: clamp(1rem, 0.6rem + 2vw, 2.5rem) clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1rem, 0.8rem + 1vw, 1.75rem);
+  }
+
+  .line {
+    display: flex;
+    align-items: last baseline; /* leader + price sit on the name's last line */
+    gap: 0.5rem;
+    font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .name {
+    font: inherit;
+    letter-spacing: inherit;
+    margin: 0;
+    flex: 0 1 auto;
+  }
+
+  /* Dotted leader between name and price, like a printed price list */
+  .leader {
+    flex: 1 1 1.5rem;
+    min-inline-size: 1.5rem;
+    border-block-end: 3px dotted var(--peg-faint);
+    transform: translateY(-0.3em);
+  }
+
+  .price {
+    flex: none;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* Description left, time right: the right edge reads as one column,
+     price above time ("$40 / 30 MIN"). */
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 0.9rem;
+    margin: 0.35rem 0 0;
+    max-inline-size: none;
+    color: var(--peg-muted);
+    font-size: var(--text-sm);
+  }
+
+  .time {
+    margin-inline-start: auto;
+    font-family: var(--font-board);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: var(--tracking-board);
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--peg);
+  }
+  /* TODO chips stay small so placeholders don't distort the real layout */
+  .line :global(.todo) {
+    font-size: var(--text-sm);
+  }
+</style>

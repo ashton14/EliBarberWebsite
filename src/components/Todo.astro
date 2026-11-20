@@ -1,0 +1,13 @@
+---
+// Visible placeholder for a fact the owner hasn't provided yet.
+// Every instance prints "TODO:" so `grep -r TODO dist/` finds what's left.
+interface Props {
+  /** What is missing, e.g. "phone number" */
+  label: string;
+  /** Render as a dashed block instead of an inline chip */
+  block?: boolean;
+}
+const { label, block = false } = Astro.props;
+---
+
+{block ? <p class="todo-block">TODO: {label}</p> : <span class="todo">TODO: {label}</span>}

@@ -1,0 +1,21 @@
+---
+// The shop's name and address in an <address> element. Must match the
+// Google Business Profile character for character.
+import { SITE } from "../config/site";
+import Todo from "./Todo.astro";
+
+const a = SITE.business.address;
+---
+
+<address class="address">
+  <strong>{SITE.name}</strong><br />
+  {a.street ?? <Todo label="street address" />}<br />
+  {a.city}, {a.region} {a.postalCode ?? <Todo label="ZIP" />}
+</address>
+
+<style>
+  .address {
+    font-style: normal;
+    margin-block-end: var(--space-2);
+  }
+</style>

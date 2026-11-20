@@ -1,0 +1,87 @@
+/* ============================================================================
+   DESIGN TOKENS — "Price Board": black felt letterboard, peg-white letters,
+   receipt paper, and one gold that means "book".
+   ============================================================================
+   Colors are named by ROLE. Components never use a raw color: only var(--*).
+   Every pairing used by the theme is listed with its WCAG contrast ratio.
+   Gold is reserved for the primary action (Book) and the active/open state.
+   ========================================================================= */
+
+:root {
+  /* --- Felt (dark surfaces: header, hero board, services board, footer) --- */
+  --felt: #141312; /* ribbed black felt, page frame */
+  --felt-raised: #24221f; /* board frames, raised panels on felt */
+  --felt-groove: #1c1b19; /* the ribbing lines in the felt texture */
+  --felt-line: #3a3733; /* hairlines and borders on felt */
+  --peg: #f2efe8; /* peg-letter white: 16.2:1 on felt, 13.8:1 on raised */
+  --peg-muted: #a8a296; /* secondary text on felt: 7.3:1 on felt, 6.3:1 on raised */
+  --peg-faint: rgb(242 239 232 / 0.35); /* dotted price leaders (decorative) */
+  --peg-line: rgb(242 239 232 / 0.55); /* ghost button border on felt (3:1+ UI contrast) */
+  --peg-wash: rgb(242 239 232 / 0.08); /* ghost button hover fill */
+
+  /* --- Gold (the action color, used sparingly) ------------------------------ */
+  --gold: #d6a84e; /* Book buttons, open status: 8.5:1 on felt, 7.2:1 on raised */
+  --gold-hover: #e7c27a; /* hover/active on felt: 11:1 */
+  --on-gold: #141312; /* text on a gold button: 8.5:1 */
+
+  /* --- Paper (light content sections) --------------------------------------- */
+  --paper: #f3f1ec; /* receipt paper, main light background */
+  --paper-alt: #ebe7de; /* alternating light sections */
+  --ink: #1b1a18; /* body text on paper: 15.4:1 (14.1:1 on paper-alt) */
+  --ink-muted: #5f5a52; /* secondary text on paper: 6.1:1 */
+  --gold-ink: #7d5f17; /* gold-family text/links on paper: 5.3:1 (4.8:1 on paper-alt) */
+  --paper-line: #d9d4c9; /* hairlines and borders on paper */
+
+  /* --- Status ---------------------------------------------------------------- */
+  --todo-bg: #fff3c4; /* visible TODO placeholders (dev content, never shipped) */
+  --todo-ink: #5c4400; /* 8.3:1 on todo-bg */
+
+  /* --- Typography -------------------------------------------------------------- */
+  --font-board: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif-condensed, sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --text-h3: clamp(1.375rem, 1.25rem + 0.5vw, 1.625rem);
+  --text-h2: clamp(2.25rem, 1.8rem + 2.2vw, 3.5rem);
+  --text-h1: clamp(2.75rem, 1.9rem + 4.4vw, 5.25rem);
+  --text-board: clamp(1.125rem, 1rem + 0.6vw, 1.5rem); /* a letterboard line */
+
+  --leading: 1.6;
+  --leading-tight: 1.02;
+  --tracking-board: 0.045em; /* peg letters sit slightly apart */
+
+  /* --- Space (one rhythm) ----------------------------------------------------- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-section: clamp(4rem, 3rem + 5vw, 7.5rem);
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+
+  /* --- Shape & depth ------------------------------------------------------------ */
+  --radius: 4px; /* letterboards are square-cornered; a hint of softness only */
+  --frame: clamp(8px, 0.4rem + 0.5vw, 14px); /* letterboard frame thickness */
+  --shadow-board: 0 18px 40px -12px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.35);
+  --shadow-paper: 0 10px 24px -14px rgb(27 26 24 / 0.35);
+
+  --content-width: 74rem;
+  --prose-width: 65ch;
+  --tap: 48px; /* minimum touch target */
+  --action-bar-h: 64px; /* mobile sticky action bar */
+
+  /* --- Motion -------------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 220ms;
+
+  /* felt ribbing: the letterboard's horizontal grooves */
+  --felt-texture: repeating-linear-gradient(
+    to bottom,
+    var(--felt) 0 5px,
+    var(--felt-groove) 5px 7px
+  );
+
+  color-scheme: light;
+}

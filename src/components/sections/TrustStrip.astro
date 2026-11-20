@@ -1,0 +1,92 @@
+---
+// Trust strip: Google rating (real numbers only), walk-in policy, and the
+// neighborhood. Each fact shows a TODO until the owner supplies it.
+import { SITE } from "../../config/site";
+import Icon from "../Icon.astro";
+import Todo from "../Todo.astro";
+import { fill } from "../../lib/format";
+
+const { business, ui } = SITE;
+const rating = business.googleRating;
+---
+
+<section class="trust on-felt" aria-label={ui.atAGlance}>
+  <ul class="container trust-list peg">
+    <li>
+      <Icon name="star" size={20} />
+      {
+        rating ? (
+          business.googleProfileUrl ? (
+            <a href={business.googleProfileUrl} rel="noopener">
+              {rating.value.toFixed(1)} · {fill(ui.reviewsCount, { count: String(rating.count) })} {ui.googleRatingSuffix}
+            </a>
+          ) : (
+            <span>
+              {rating.value.toFixed(1)} · {fill(ui.reviewsCount, { count: String(rating.count) })} {ui.googleRatingSuffix}
+            </span>
+          )
+        ) : (
+          <Todo label="Google rating + review count" />
+        )
+      }
+    </li>
+    <li>
+      <Icon name="door" size={20} />
+      {
+        business.walkIns === null ? (
+          <Todo label="walk-ins?" />
+        ) : (
+          <span>{business.walkIns ? ui.walkInsWelcome : ui.appointmentsOnly}</span>
+        )
+      }
+    </li>
+    <li>
+      <Icon name="pin" size={20} />
+      <span>{business.address.city}, {business.address.region}</span>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .trust {
+    border-block: 1px solid var(--felt-line);
+    background: var(--felt-raised);
+  }
+
+  /* Phones: a tidy left-aligned stack; wider: one centred row */
+  .trust-list {
+    display: grid;
+    gap: 0.25rem;
+    list-style: none;
+    margin-block: 0;
+    padding-block: 0.85rem;
+    font-size: var(--text-board);
+  }
+
+  .trust-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-block-size: 2.25rem;
+  }
+
+  .trust-list :global(svg) {
+    color: var(--peg-muted);
+    flex: none;
+  }
+
+  .trust-list a {
+    text-decoration: underline;
+    text-decoration-color: var(--peg-muted);
+    text-underline-offset: 0.25em;
+  }
+
+  @media (min-width: 40rem) {
+    .trust-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem var(--space-4);
+    }
+  }
+</style>

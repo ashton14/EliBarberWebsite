@@ -1,0 +1,99 @@
+---
+// Click-to-load map. Nothing from Google loads until the visitor asks:
+// a drawn placeholder + "Show map" button swaps in the iframe on click
+// (~0.4 KB script). Without JS, the button is a plain link to Google Maps.
+import { SITE } from "../config/site";
+import { directionsUrl, mapEmbedUrl } from "../lib/format";
+import Icon from "./Icon.astro";
+import Todo from "./Todo.astro";
+
+const embed = mapEmbedUrl();
+const fallback = directionsUrl();
+---
+
+<div class="map-facade on-felt" data-embed={embed ?? undefined} data-title={SITE.ui.mapTitle}>
+  <svg class="map-art" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <rect width="400" height="250" fill="var(--felt-raised)" />
+    <g fill="none" stroke="var(--felt-line)" stroke-width="10" stroke-linecap="round">
+      <path d="M-10 170 C 80 150, 160 190, 410 120" />
+      <path d="M120 -10 L 150 260" />
+      <path d="M300 -10 C 280 80, 320 160, 290 260" />
+    </g>
+    <g fill="none" stroke="var(--felt-line)" stroke-width="3">
+      <path d="M-10 60 L 410 90" />
+      <path d="M40 -10 L 60 260" />
+      <path d="M220 -10 L 230 260" />
+    </g>
+  </svg>
+  <div class="map-cta">
+    {
+      embed ? (
+        <a class="button button--ghost map-load" href={fallback ?? "#"} rel="noopener">
+          <Icon name="map" size={20} />
+          {SITE.ui.loadMap}
+        </a>
+      ) : (
+        <Todo label="street address (for the map)" />
+      )
+    }
+    {embed && <p class="map-note">{SITE.ui.mapPrivacyNote}</p>}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".map-facade[data-embed]").forEach((box) => {
+    box.querySelector(".map-load")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      const iframe = document.createElement("iframe");
+      iframe.src = box.dataset.embed ?? "";
+      iframe.title = box.dataset.title ?? "";
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.allowFullscreen = true;
+      box.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>
+
+<style>
+  .map-facade {
+    position: relative;
+    aspect-ratio: 8 / 5;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--felt-raised);
+    border: var(--frame) solid var(--felt-raised);
+  }
+
+  .map-art {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .map-cta {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    text-align: center;
+  }
+
+  .map-note {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--peg-muted);
+  }
+
+  .map-facade :global(iframe) {
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+    display: block;
+  }
+</style>

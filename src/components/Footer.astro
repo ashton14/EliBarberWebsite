@@ -1,0 +1,173 @@
+---
+// Footer: name, address and phone (exactly as on Google), hours, social
+// links, a "leave us a review" link and the privacy link.
+import { SITE } from "../config/site";
+import { telHref } from "../lib/format";
+import Address from "./Address.astro";
+import HoursTable from "./HoursTable.astro";
+import Icon from "./Icon.astro";
+import Todo from "./Todo.astro";
+
+const { business, ui } = SITE;
+const call = telHref(business.phone);
+const year = new Date().getFullYear();
+
+type SocialIcon = "instagram" | "tiktok" | "facebook" | "yelp";
+const socialList: { icon: SocialIcon; label: string; url: string | null }[] = [
+  { icon: "instagram", label: "Instagram", url: business.social.instagram },
+  { icon: "tiktok", label: "TikTok", url: business.social.tiktok },
+  { icon: "facebook", label: "Facebook", url: business.social.facebook },
+  { icon: "yelp", label: "Yelp", url: business.social.yelp },
+];
+const socials = socialList.flatMap((s) => (s.url ? [{ ...s, url: s.url }] : []));
+---
+
+<footer class="site-footer on-felt">
+  <div class="container footer-grid">
+    <div class="footer-id">
+      <p class="footer-brand peg">{SITE.name}</p>
+      <Address />
+      <p>
+        {
+          call ? (
+            <a href={call} class="footer-phone">
+              <Icon name="phone" size={18} />
+              {business.phoneDisplay ?? business.phone}
+            </a>
+          ) : (
+            <Todo label="phone" />
+          )
+        }
+      </p>
+    </div>
+
+    <div class="footer-hours">
+      <p class="footer-heading peg">{ui.hoursTitle}</p>
+      <HoursTable compact caption={ui.hoursTitle} />
+    </div>
+
+    <div class="footer-links">
+      <p class="footer-heading peg">{ui.followUs}</p>
+      {
+        socials.length > 0 ? (
+          <ul>
+            {socials.map(({ icon, label, url }) => (
+              <li>
+                <a href={url} rel="noopener me">
+                  <Icon name={icon} size={18} />
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>
+            <Todo label="Instagram / TikTok / Facebook / Yelp" />
+          </p>
+        )
+      }
+      <p>
+        {
+          business.googleReviewUrl ? (
+            <a href={business.googleReviewUrl} rel="noopener" class="footer-review">
+              <Icon name="star" size={18} />
+              {ui.leaveReview}
+            </a>
+          ) : (
+            <Todo label="Google 'write a review' link" />
+          )
+        }
+      </p>
+    </div>
+  </div>
+
+  <div class="container footer-base">
+    <p>&copy; {year} {SITE.name}. {ui.allRightsReserved}</p>
+    <a href="/privacy/">{ui.privacyLabel}</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-5) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--peg-muted);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  .footer-brand {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--peg);
+    margin-block-end: var(--space-2);
+  }
+
+  .footer-heading {
+    font-size: 1.25rem;
+    color: var(--peg);
+    margin-block-end: var(--space-1);
+  }
+
+  .site-footer :global(address) {
+    color: var(--peg-muted);
+  }
+
+  .site-footer :global(address strong) {
+    color: var(--peg);
+  }
+
+  .site-footer :global(.hours tr + tr) {
+    border: 0;
+  }
+
+  .site-footer :global(.hours .closed td) {
+    color: var(--peg-muted);
+  }
+
+  .footer-hours {
+    max-inline-size: 18rem;
+  }
+
+  .footer-phone,
+  .footer-review,
+  .footer-links li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-block-size: var(--tap);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .footer-links ul {
+    list-style: none;
+    margin: 0 0 var(--space-1);
+    padding: 0;
+  }
+
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-3);
+    border-block-start: 1px solid var(--felt-line);
+  }
+
+  .footer-base p {
+    margin: 0;
+  }
+
+  .footer-base a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--tap);
+  }
+</style>

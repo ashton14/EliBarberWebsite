@@ -1,0 +1,73 @@
+---
+// Weekly hours as a real table. Used on the home page, /visit/ and in the
+// footer (compact). Shows a TODO for any day without hours.
+import { DAYS, SITE } from "../config/site";
+import { formatDayHours } from "../lib/format";
+import Todo from "./Todo.astro";
+
+interface Props {
+  compact?: boolean;
+  caption?: string;
+}
+
+const { compact = false, caption } = Astro.props;
+---
+
+<table class:list={["hours", { compact }]}>
+  {caption && <caption class="visually-hidden">{caption}</caption>}
+  <tbody>
+    {
+      DAYS.map((day) => {
+        const text = formatDayHours(SITE.hours[day]);
+        return (
+          <tr class:list={{ closed: SITE.hours[day] === "closed" }}>
+            <th scope="row">{compact ? day.slice(0, 3) : day}</th>
+            <td>{text ?? <Todo label="hours" />}</td>
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>
+
+<style>
+  .hours {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th,
+  td {
+    padding-block: 0.6rem;
+    text-align: start;
+    font-weight: 400;
+  }
+
+  th {
+    font-weight: 700;
+    padding-inline-end: var(--space-3);
+  }
+
+  td {
+    text-align: end;
+  }
+
+  tr + tr {
+    border-block-start: 1px solid var(--paper-line);
+  }
+
+  .closed td {
+    color: var(--ink-muted);
+  }
+
+  .compact th,
+  .compact td {
+    padding-block: 0.2rem;
+    font-size: var(--text-sm);
+  }
+
+  .compact tr + tr {
+    border: 0;
+  }
+</style>

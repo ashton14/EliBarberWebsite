@@ -150,7 +150,7 @@ export interface SiteConfig {
     privacy: { h1: string };
     links: { services: string; barbers: string; visit: string; reviews: string };
   };
-  navigation: { label: string; href: string }[];
+  navigation: { label: string; href: string; anchor: string }[];
   ui: Record<UiKey, string>;
 }
 
@@ -413,11 +413,13 @@ export const SITE: SiteConfig = {
     },
   },
 
+  // `href` is used on inner pages; on the home page the nav scrolls smoothly
+  // to `anchor` (the matching section on the same page) instead.
   navigation: [
-    { label: "Services", href: "/services/" },
-    { label: "Barber", href: "/barbers/" },
-    { label: "Reviews", href: "/#reviews" },
-    { label: "Visit", href: "/visit/" },
+    { label: "Services", href: "/services/", anchor: "#services" },
+    { label: "Barber", href: "/barbers/", anchor: "#barber" },
+    { label: "Reviews", href: "/#reviews", anchor: "#reviews" },
+    { label: "Visit", href: "/visit/", anchor: "#visit" },
   ],
 
   ui: {

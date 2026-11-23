@@ -111,8 +111,19 @@ shop photo that has the logo on it, at the same size and file name.
 
 ## Deploying
 
-The build output is a static folder, `dist/`. `public/_headers` sets long-lived caching for the
-hashed assets and works on both hosts below.
+The build output is a static folder, `dist/`.
+
+**GitHub Pages (current):** `.github/workflows/deploy.yml` builds and publishes on every push to
+`main` (repo Settings → Pages → Source: GitHub Actions). The site is served at
+https://ashton14.github.io/EliBarberWebsite/, so `site.ts` has `url: "https://ashton14.github.io"`
+and `basePath: "/EliBarberWebsite"`. Write root-absolute links with `withBase()` from
+`src/lib/paths.ts` so they keep working under that sub-path. GitHub Pages ignores
+`public/_headers`.
+
+For a custom domain later, set `url` to it and `basePath` to `"/"`, add the domain under
+Settings → Pages, and point DNS at GitHub.
+
+`public/_headers` sets long-lived caching for the hashed assets on the two hosts below.
 
 **Cloudflare Pages:** Workers & Pages → Create → Pages → connect the Git repo.
 - Build command: `npm run build`
@@ -124,9 +135,8 @@ hashed assets and works on both hosts below.
 - Publish directory: `dist`
 - Environment variable: `NODE_VERSION = 22`
 
-Before the first deploy, set `url` in `site.ts` to the real domain (for example
-`https://conejobarber.com`, no trailing slash). Canonical URLs, the sitemap, `robots.txt`, the
-share-image URL and the structured data all use it.
+On any host, `url` + `basePath` in `site.ts` must match the live address: canonical URLs, the
+sitemap, `robots.txt`, the share-image URL and the structured data all use them.
 
 **Analytics (optional):** if you want visitor counts, use a privacy-friendly option such as
 Cloudflare Web Analytics. Add its snippet with `defer` in `src/layouts/Base.astro`. The site
@@ -165,8 +175,8 @@ lockfile (`package-lock.json`) is committed.
 1. **Fill in the facts.** Search `site.ts` for `TODO` and replace every `null` you can. Then
    check the built site has none left: `grep -r "TODO:" dist`.
 2. **Real photos** in, and the placeholders and placeholder share image replaced.
-3. **Domain:** set `url` in `site.ts`, rebuild, and connect the domain in Cloudflare Pages or
-   Netlify (HTTPS is automatic).
+3. **Domain:** set `url` and `basePath` in `site.ts`, rebuild, and connect the domain to the
+   host (HTTPS is automatic).
 4. **Google Search Console:** verify the domain and submit `https://<your-domain>/sitemap-index.xml`.
 5. **Google Business Profile:** add the website URL and the booking link (Appointment URL).
    Make sure the name, address and phone match the site exactly.

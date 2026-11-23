@@ -85,7 +85,11 @@ export interface FaqItem {
 }
 
 export interface SiteConfig {
+  /** Origin only, no path or trailing slash, e.g. "https://conejobarber.com" */
   url: string;
+  /** Sub-path the site is served from: "/" at a domain root,
+   *  "/EliBarberWebsite" on GitHub Pages (https://<user>.github.io/<repo>/). */
+  basePath: string;
   lang: string;
   ogLocale: string;
   name: string;
@@ -196,8 +200,9 @@ type UiKey =
 // Content
 // ---------------------------------------------------------------------------
 export const SITE: SiteConfig = {
-  // TODO: real domain, no trailing slash (e.g. "https://conejobarber.com")
-  url: "https://conejobarber.example",
+  // GitHub Pages for now. With a custom domain: url "https://conejobarber.com", basePath "/".
+  url: "https://ashton14.github.io",
+  basePath: "/EliBarberWebsite",
   lang: "en-US",
   ogLocale: "en_US",
   name: "Conejo Barber",

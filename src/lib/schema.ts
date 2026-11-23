@@ -20,8 +20,9 @@ import type {
 } from "schema-dts";
 import { DAYS, SITE } from "../config/site";
 import { addressLine, directionsUrl } from "./format";
+import { absUrl, withBase } from "./paths";
 
-const base = SITE.url;
+const base = `${SITE.url}${withBase("/").replace(/\/$/, "")}`;
 export const IDS = {
   website: `${base}/#website`,
   organization: `${base}/#organization`,
@@ -29,7 +30,7 @@ export const IDS = {
   logo: `${base}/#logo`,
 };
 
-const abs = (path: string) => new URL(path, `${base}/`).href;
+const abs = (path: string) => absUrl(path);
 const ref = (id: string) => ({ "@id": id });
 
 /** Drop null/undefined/empty-array fields so unknown facts never appear. */

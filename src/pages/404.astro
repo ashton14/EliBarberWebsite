@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
 import { SITE } from "../config/site";
 import { telHref } from "../lib/format";
@@ -19,7 +20,7 @@ const call = telHref(SITE.business.phone);
           <Icon name="phone" size={20} />
           {SITE.ui.call}
         </a>
-        <a class="text-link" href="/">
+        <a class="text-link" href={withBase("/")}>
           {SITE.ui.notFoundHome}
           <Icon name="arrow" size={20} />
         </a>

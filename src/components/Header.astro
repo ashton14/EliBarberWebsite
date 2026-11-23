@@ -4,23 +4,24 @@
 // instead of hiding behind a menu button.
 import { SITE } from "../config/site";
 import BookLink from "./BookLink.astro";
+import { stripBase, withBase } from "../lib/paths";
 
 const path = Astro.url.pathname;
 // One-page site: on the home page every nav link targets a section on the
 // same page, so the browser scrolls to it smoothly (see global.css). On the
 // 404 page they link back to that section of the home page.
-const onHome = path === "/";
+const onHome = stripBase(path) === "/";
 ---
 
 <header class="site-header on-felt">
   <div class="container header-inner">
-    <a href={onHome ? "#top" : "/"} class="brand peg">{SITE.name}</a>
+    <a href={onHome ? "#top" : withBase("/")} class="brand peg">{SITE.name}</a>
     <nav class="nav" aria-label={SITE.ui.primaryNav}>
       <ul>
         {
           SITE.navigation.map((item) => (
             <li>
-              <a href={onHome ? item.anchor : item.href}>
+              <a href={onHome ? item.anchor : withBase(item.href)}>
                 {item.label}
               </a>
             </li>

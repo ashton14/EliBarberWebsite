@@ -3,7 +3,7 @@
 // currentColor. Decorative by default (aria-hidden); the surrounding link or
 // button carries the accessible name.
 interface Props {
-  name: "calendar" | "phone" | "pin" | "star" | "arrow" | "instagram" | "tiktok" | "facebook" | "yelp" | "clock" | "map" | "door";
+  name: "calendar" | "phone" | "pin" | "star" | "arrow" | "instagram" | "tiktok" | "facebook" | "yelp" | "clock" | "map" | "door" | "mail";
   size?: number;
   class?: string;
 }
@@ -20,6 +20,7 @@ const PATHS: Record<Props["name"], string> = {
   tiktok: `<path d="M14 3.5v11.2a3.8 3.8 0 1 1-3.8-3.8"/><path d="M14 3.5a4.8 4.8 0 0 0 5 4.6"/>`,
   facebook: `<path d="M14.5 21v-7.5h2.7l.4-3.2h-3.1V8.4c0-.9.3-1.6 1.6-1.6h1.7V4a21 21 0 0 0-2.5-.1c-2.5 0-4.1 1.5-4.1 4.2v2.3H8.4v3.2h2.8V21"/>`,
   yelp: `<path d="M11 3.6v8.2L5.4 7.6"/><path d="M11 11.8 4.6 13.5M11 11.8l-3.6 6.1M12.8 12.6l6.2-2.4M12.8 13.8l5 4.3"/>`,
+  mail: `<rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 6.5 8 6.5 8-6.5"/>`,
   clock: `<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>`,
   door: `<path d="M5.5 20.5V4.5a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v16"/><path d="M3.5 20.5h17"/><path d="M14.5 12.5v.01"/>`,
   map: `<path d="m3.5 6 5.5-2 6 2 5.5-2v14l-5.5 2-6-2-5.5 2z"/><path d="M9 4v14M15 6v14"/>`,

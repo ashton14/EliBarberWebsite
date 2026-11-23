@@ -1,6 +1,6 @@
 ---
 // Trust strip: Google rating (real numbers only), walk-in policy, and the
-// neighborhood. Each fact shows a TODO until the owner supplies it.
+// neighborhood. The rating is hidden until real numbers are added.
 import { SITE } from "../../config/site";
 import Icon from "../Icon.astro";
 import Todo from "../Todo.astro";
@@ -12,11 +12,11 @@ const rating = business.googleRating;
 
 <section class="trust on-felt" aria-label={ui.atAGlance}>
   <ul class="container trust-list peg">
-    <li>
-      <Icon name="star" size={20} />
-      {
-        rating ? (
-          business.googleProfileUrl ? (
+    {
+      rating && (
+        <li>
+          <Icon name="star" size={20} />
+          {business.googleProfileUrl ? (
             <a href={business.googleProfileUrl} rel="noopener">
               {rating.value.toFixed(1)} · {fill(ui.reviewsCount, { count: String(rating.count) })} {ui.googleRatingSuffix}
             </a>
@@ -24,12 +24,10 @@ const rating = business.googleRating;
             <span>
               {rating.value.toFixed(1)} · {fill(ui.reviewsCount, { count: String(rating.count) })} {ui.googleRatingSuffix}
             </span>
-          )
-        ) : (
-          <Todo label="Google rating + review count" />
-        )
-      }
-    </li>
+          )}
+        </li>
+      )
+    }
     <li>
       <Icon name="door" size={20} />
       {

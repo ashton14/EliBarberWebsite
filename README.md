@@ -4,7 +4,8 @@ A fast, static website for Conejo Barber, a barbershop in Thousand Oaks, CA. It'
 [Astro](https://astro.build) from the MIT-licensed [Chalet](https://github.com/M4xKey/astro-chalet)
 theme, which was copied in as a template.
 
-- **Pages:** `/` (home), `/services/`, `/barbers/`, `/visit/`, `/privacy/` and a 404 page.
+- **Pages:** one page (`/`) with every section, plus a 404 page. Nav links scroll
+  smoothly to their section.
 - **Design:** the "Price Board" look. Black felt letterboard, peg-white condensed letters,
   receipt-paper sections, and gold used only for Book. See [`DESIGN.md`](DESIGN.md) and
   [`PRODUCT.md`](PRODUCT.md).
@@ -58,8 +59,8 @@ The hero's live status, the hours tables and the structured data all update from
 ```
 
 - `priceFrom: true` shows the price as "From $45".
-- `popular: true` puts the service on the home page (the first 6 are shown) and in the hero's
-  price line. Every service appears on `/services/`.
+- Every service appears in the Services section. The first one with `popular: true` is shown in
+  the hero's price line.
 - Keep names identical to your booking provider's menu, so people find the same service after
   tapping Book.
 
@@ -172,11 +173,8 @@ lockfile (`package-lock.json`) is committed.
 6. **Same name, address and phone everywhere:** Apple Business Connect, Bing Places, Yelp and
    Facebook. Every listing should be identical, character for character.
 7. **Reviews:** make a QR code for the Google "write a review" link and put it at the chair or
-   checkout. Add the same link to `googleReviewUrl` (it shows in the footer).
+   checkout. Add the same link to `reviewUrl` (it shows in the footer).
 8. **Structured data:** after deploying, test the home page in Google's
    [Rich Results Test](https://search.google.com/test/rich-results) and the
    [Schema Markup Validator](https://validator.schema.org/).
-9. **Privacy policy:** fill in the TODOs on `/privacy/` (hosting provider, booking provider,
-   email, effective date), and have the owner or their advisor review it. It's written for how
-   this site works, but it's not legal advice.
-10. **Lighthouse on the live URL**, mobile, every page. Re-check after real photos are added.
+9. **Lighthouse on the live URL**, mobile, every page. Re-check after real photos are added.

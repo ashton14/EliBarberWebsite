@@ -6,20 +6,21 @@ import { SITE } from "../config/site";
 import BookLink from "./BookLink.astro";
 
 const path = Astro.url.pathname;
-// On the home page every nav link targets a section on the same page, so the
-// browser scrolls to it smoothly (see global.css). Elsewhere they link to pages.
+// One-page site: on the home page every nav link targets a section on the
+// same page, so the browser scrolls to it smoothly (see global.css). On the
+// 404 page they link back to that section of the home page.
 const onHome = path === "/";
 ---
 
 <header class="site-header on-felt">
   <div class="container header-inner">
-    <a href="/" class="brand peg">{SITE.name}</a>
+    <a href={onHome ? "#top" : "/"} class="brand peg">{SITE.name}</a>
     <nav class="nav" aria-label={SITE.ui.primaryNav}>
       <ul>
         {
           SITE.navigation.map((item) => (
             <li>
-              <a href={onHome ? item.anchor : item.href} aria-current={path === item.href ? "page" : undefined}>
+              <a href={onHome ? item.anchor : item.href}>
                 {item.label}
               </a>
             </li>

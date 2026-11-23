@@ -10,15 +10,13 @@ import MapFacade from "../MapFacade.astro";
 import Todo from "../Todo.astro";
 
 interface Props {
-  /** false on /visit/ itself (no link to the page you are on) */
-  showVisitLink?: boolean;
   /** Optional intro above the areas list */
   areasIntro?: string;
-  /** Section heading override (the /visit/ page already says "Hours" in its H1) */
+  /** Section heading override */
   title?: string;
 }
 
-const { showVisitLink = true, areasIntro, title } = Astro.props;
+const { areasIntro, title } = Astro.props;
 const { business, ui, info } = SITE;
 const directions = directionsUrl();
 const call = telHref(business.phone);
@@ -52,7 +50,7 @@ const call = telHref(business.phone);
             )
           }
         </p>
-        {business.parking ? <p class="visit-parking">{business.parking}</p> : <p><Todo label="parking / landmarks" /></p>}
+        {business.parking && <p class="visit-parking">{business.parking}</p>}
       </div>
     </div>
 
@@ -62,14 +60,6 @@ const call = telHref(business.phone);
       <ul>
         {business.areasServed.map((a) => <li>{a}</li>)}
       </ul>
-      {
-        showVisitLink && (
-          <a class="text-link" href="/visit/">
-            {ui.visitPageLink}
-            <Icon name="arrow" size={20} />
-          </a>
-        )
-      }
     </div>
   </div>
 </section>

@@ -60,7 +60,7 @@ const fontFaces = `
     <Seo title={title} description={description} image={ogImage} noindex={noindex} />
     {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body>
+  <body id="top">
     <a href="#content" class="skip-link">{SITE.ui.skipToContent}</a>
     <Header />
     <main id="content">

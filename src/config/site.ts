@@ -40,7 +40,7 @@ export interface Service {
   minutes: number | null;
   /** One line. `null` = TODO. */
   description: string | null;
-  /** Shown on the home page (pick the 6 most popular). */
+  /** The hero price line uses the first popular service. */
   popular: boolean;
 }
 
@@ -49,10 +49,12 @@ export interface Barber {
   role: string;
   specialty: string | null;
   bio: string | null;
-  /** File name in src/assets/photos/ */
-  photo: string;
-  photoAlt: string;
+  /** File name in src/assets/photos/. `null` = no portrait (section shows text only). */
+  photo: string | null;
+  photoAlt: string | null;
   instagram: string | null;
+  /** Direct contact, shown under "Contact" in the Barber section. E.164 phone. */
+  contact: { phone: string | null; phoneDisplay: string | null; email: string | null };
   /** Personal booking link; falls back to the shop booking URL. */
   bookingUrl: string | null;
 }
@@ -91,7 +93,7 @@ export interface SiteConfig {
   description: string;
   /** Per-page <title> (≤60 chars) and meta description (≤155 chars).
    *  The build fails if either is too long. */
-  pages: Record<"home" | "services" | "barbers" | "visit" | "privacy" | "notFound", { title: string; description: string }>;
+  pages: Record<"home" | "notFound", { title: string; description: string }>;
   business: {
     /** E.164, e.g. "+18055550123" */
     phone: string | null;
@@ -108,7 +110,8 @@ export interface SiteConfig {
     geo: { latitude: number; longitude: number } | null;
     bookingUrl: string | null;
     googleProfileUrl: string | null;
-    googleReviewUrl: string | null;
+    /** "Write a review" link (any site: Google, Yelp…). */
+    reviewUrl: string | null;
     /** Real numbers from the Google profile only. */
     googleRating: { value: number; count: number } | null;
     social: {
@@ -137,21 +140,12 @@ export interface SiteConfig {
   };
   services: { title: string; intro: string; items: Service[] };
   gallery: { title: string; intro: string; photos: GalleryPhoto[] };
-  barbers: { title: string; items: Barber[] };
+  barbers: { title: string; contactTitle: string; items: Barber[] };
   reviews: { title: string; items: Review[] };
   about: { title: string; paragraphs: string[] | null };
   faq: { title: string; items: FaqItem[] };
   info: { title: string };
   ctaBanner: { title: string; text: string };
-  /** Copy for the inner pages (H1, intro, sub-headings, cross-links). */
-  inner: {
-    home: string;
-    services: { h1: string; intro: string; detailsTitle: string; paymentTitle: string; walkInsTitle: string };
-    barbers: { h1: string; intro: string; bioTitle: string; workTitle: string };
-    visit: { h1: string; intro: string; infoTitle: string; gettingHereTitle: string; parkingTitle: string; paymentTitle: string; areasIntro: string };
-    privacy: { h1: string };
-    links: { services: string; barbers: string; visit: string; reviews: string };
-  };
   navigation: { label: string; href: string; anchor: string }[];
   ui: Record<UiKey, string>;
 }
@@ -163,7 +157,6 @@ type UiKey =
   | "bookNow"
   | "call"
   | "directions"
-  | "fullMenu"
   | "openNow"
   | "closedNow"
   | "closesAt"
@@ -183,11 +176,8 @@ type UiKey =
   | "appointmentsOnly"
   | "readAllReviews"
   | "leaveReview"
-  | "meetBarber"
-  | "meetNamed"
   | "bookWith"
   | "minutesShort"
-  | "privacyLabel"
   | "followUs"
   | "allRightsReserved"
   | "quickActions"
@@ -197,7 +187,6 @@ type UiKey =
   | "reviewsBoard"
   | "atAGlance"
   | "reviewsCount"
-  | "visitPageLink"
   | "ratingOutOf"
   | "notFoundTitle"
   | "notFoundText"
@@ -219,26 +208,6 @@ export const SITE: SiteConfig = {
       title: "Conejo Barber | Barbershop in Thousand Oaks, CA",
       description:
         "Sharp cuts, clean fades and beard trims in Thousand Oaks, CA. See prices and hours, then book your next cut online.",
-    },
-    services: {
-      title: "Haircut & Fade Prices | Conejo Barber Thousand Oaks",
-      description:
-        "Haircut, skin fade, beard trim and kids' cut prices at Conejo Barber in Thousand Oaks, CA. See how long each takes, then book online.",
-    },
-    barbers: {
-      title: "Meet Your Barber | Conejo Barber, Thousand Oaks",
-      description:
-        "Meet the barber at Conejo Barber in Thousand Oaks, CA: specialties, recent work and a direct link to book your next cut.",
-    },
-    visit: {
-      title: "Hours & Directions | Conejo Barber, Thousand Oaks",
-      description:
-        "Hours, address, parking and directions for Conejo Barber in Thousand Oaks, CA, serving Newbury Park, Westlake Village and nearby. Book online.",
-    },
-    privacy: {
-      title: "Privacy Policy | Conejo Barber",
-      description:
-        "How Conejo Barber in Thousand Oaks, CA handles your information, and your rights under California privacy law.",
     },
     notFound: {
       title: "Page Not Found | Conejo Barber",
@@ -262,8 +231,8 @@ export const SITE: SiteConfig = {
     geo: null, // TODO: { latitude: 34.17, longitude: -118.84 } copied from the Maps pin
     bookingUrl: "https://book.heygoldie.com/Barber-7f8963f4ef15", // Goldie
     googleProfileUrl: null, // TODO
-    googleReviewUrl: null, // TODO: the "write a review" link
-    googleRating: null, // TODO: { value: 4.9, count: 123 } — real numbers only
+    reviewUrl: "https://www.yelp.com/writeareview/biz/ECf63iCCzZQKRM_Uj-c69Q",
+    googleRating: null, // optional: { value: 4.9, count: 123 }, real numbers only; hidden while null
     social: {
       instagram: null, // TODO
       tiktok: null, // TODO
@@ -285,14 +254,13 @@ export const SITE: SiteConfig = {
     timeZone: "America/Los_Angeles",
   },
 
-  // From conejovalleybarber.com (Nov 2026). TODO: confirm with Eli; his sheet's Hours tab is blank.
   hours: {
-    Monday: "closed",
-    Tuesday: "closed",
-    Wednesday: { opens: "11:00", closes: "16:30" },
-    Thursday: "closed",
-    Friday: "closed",
-    Saturday: { opens: "12:00", closes: "16:00" },
+    Monday: { opens: "10:00", closes: "18:00" },
+    Tuesday: { opens: "10:00", closes: "18:00" },
+    Wednesday: { opens: "10:00", closes: "18:00" },
+    Thursday: { opens: "10:00", closes: "18:00" },
+    Friday: { opens: "10:00", closes: "18:00" },
+    Saturday: "closed",
     Sunday: "closed",
   },
 
@@ -312,17 +280,11 @@ export const SITE: SiteConfig = {
     // Bookable services: names, prices and times copied from the Goldie booking
     // page (keep names identical so visitors find them after tapping Book).
     // Descriptions are based on conejovalleybarber.com.
-    // The last four are listed on conejovalleybarber.com but not on Goldie.
-    // TODO: get their prices and times from Eli, or remove them.
     items: [
       { name: "Haircut", price: 45, minutes: 40, description: "Men's haircut in the style you want, from classic cuts to fades.", popular: true },
       { name: "Skin fade", price: 50, minutes: 45, description: "A fade blended all the way down to the skin.", popular: true },
       { name: "Beard trim", price: 20, minutes: 20, description: "Line-up and trim to keep your beard neat and presentable.", popular: true },
       { name: "Shave", price: 40, minutes: 30, description: "Straight razor shave, an age-old barbershop tradition.", popular: true },
-      { name: "Kids Cut / Buzz Cut / Afro Shaping", price: null, minutes: null, description: "Kids' cuts, buzz cuts, Afro shaping and more.", popular: false },
-      { name: "Clean Up / Seniors / Students", price: null, minutes: null, description: "A quick clean-up, tailored to what you need.", popular: false },
-      { name: "Facial – Scrub & Black Mask", price: null, minutes: null, description: "Facial cleanse, exfoliating scrub, facial massage and mask with hot towels.", popular: false },
-      { name: "Enhancements", price: null, minutes: null, description: "Hair color enhancement, in black or brown.", popular: false },
     ],
   },
 
@@ -343,6 +305,7 @@ export const SITE: SiteConfig = {
 
   barbers: {
     title: "Meet your barber",
+    contactTitle: "Contact",
     items: [
       {
         name: "Eli", // Goldie lists "Eli R"
@@ -350,9 +313,10 @@ export const SITE: SiteConfig = {
         specialty: "Fades, classic cuts and straight razor shaves",
         // From conejovalleybarber.com
         bio: "Eli has been proudly serving clients for over 15 years. He's known for his professional haircutting skills, which have made him popular with loyal customers. From stylish fades to classic cuts, whatever the look, he makes it happen with precision and care.",
-        photo: "placeholder-barber-portrait.jpg", // TODO: real photo
-        photoAlt: "Photo placeholder: barber portrait", // TODO: describe the real photo
-        instagram: null, // TODO
+        photo: null, // add a portrait file name here to show one
+        photoAlt: null,
+        instagram: null,
+        contact: { phone: "+18054379996", phoneDisplay: "(805) 437-9996", email: "elithebarber@gmail.com" },
         bookingUrl: null, // uses the shop booking link when null
       },
     ],
@@ -399,9 +363,6 @@ export const SITE: SiteConfig = {
       { question: "Do I need to book ahead?", answer: "It's the best way to get the time you want and skip the wait. Book online or give us a call." },
       { question: "Do you cut kids' hair?", answer: "Yes. We cut men's and kids' hair, from traditional styles to trendy ones." },
       { question: "How long does a haircut take?", answer: "About 40 minutes for a haircut and 45 minutes for a skin fade." },
-      { question: "Where do I park?", answer: null },
-      { question: "What payment do you accept?", answer: null },
-      { question: "What is your cancellation policy?", answer: null },
     ],
   },
 
@@ -412,46 +373,13 @@ export const SITE: SiteConfig = {
     text: "Pick a time that works for you and book online.",
   },
 
-  inner: {
-    home: "Home",
-    services: {
-      h1: "Haircut & fade prices",
-      intro: "Every service, with its price and how long it takes. Book online when you're ready.",
-      detailsTitle: "Good to know",
-      paymentTitle: "Payment",
-      walkInsTitle: "Walk-ins",
-    },
-    barbers: {
-      h1: "Meet your barber",
-      intro: "The barber behind every cut at Conejo Barber in Thousand Oaks.",
-      bioTitle: "About",
-      workTitle: "Recent work",
-    },
-    visit: {
-      h1: "Hours & directions",
-      intro: "When the shop is open, where to find it in Thousand Oaks, and where to park.",
-      infoTitle: "Opening hours & address",
-      gettingHereTitle: "Getting here",
-      parkingTitle: "Parking & landmarks",
-      paymentTitle: "Payment",
-      areasIntro: "The shop is in Thousand Oaks, in the Conejo Valley. Nearby communities:",
-    },
-    privacy: { h1: "Privacy policy" },
-    links: {
-      services: "See every service and price",
-      barbers: "Meet your barber",
-      visit: "Hours, parking and directions",
-      reviews: "Read client reviews",
-    },
-  },
-
-  // `href` is used on inner pages; on the home page the nav scrolls smoothly
-  // to `anchor` (the matching section on the same page) instead.
+  // One-page site: on the home page the nav scrolls smoothly to `anchor`;
+  // on the 404 page it links to `href` (the same section).
   navigation: [
-    { label: "Services", href: "/services/", anchor: "#services" },
-    { label: "Barber", href: "/barbers/", anchor: "#barber" },
+    { label: "Services", href: "/#services", anchor: "#services" },
+    { label: "Barber", href: "/#barber", anchor: "#barber" },
     { label: "Reviews", href: "/#reviews", anchor: "#reviews" },
-    { label: "Visit", href: "/visit/", anchor: "#visit" },
+    { label: "Visit", href: "/#visit", anchor: "#visit" },
   ],
 
   ui: {
@@ -461,7 +389,6 @@ export const SITE: SiteConfig = {
     bookNow: "Book now",
     call: "Call",
     directions: "Directions",
-    fullMenu: "Full menu: all services and prices",
     openNow: "Open now",
     closedNow: "Closed now",
     closesAt: "Closes {time}",
@@ -481,11 +408,8 @@ export const SITE: SiteConfig = {
     appointmentsOnly: "By appointment",
     readAllReviews: "Read all reviews on Google",
     leaveReview: "Leave us a review",
-    meetBarber: "More about your barber",
-    meetNamed: "More about {name}",
     bookWith: "Book with {name}",
     minutesShort: "min",
-    privacyLabel: "Privacy",
     followUs: "Follow",
     allRightsReserved: "All rights reserved.",
     quickActions: "Quick actions",
@@ -495,7 +419,6 @@ export const SITE: SiteConfig = {
     reviewsBoard: "{rating} · {count} Google reviews",
     atAGlance: "At a glance",
     reviewsCount: "{count} reviews",
-    visitPageLink: "Directions, parking and more on the Visit page",
     ratingOutOf: "out of 5 stars",
     notFoundTitle: "This page took a wrong turn",
     notFoundText: "The page you were looking for isn't here. Book a cut, give us a call, or head back home.",

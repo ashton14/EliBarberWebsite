@@ -1,19 +1,10 @@
 ---
-// Home page services: the six most popular, on the letterboard, with Book
-// right at the price decision and a link to the full menu on /services/.
+// Services: every item on the letterboard, with Book right at the price decision.
 import { SITE } from "../../config/site";
 import BookLink from "../BookLink.astro";
-import Icon from "../Icon.astro";
 import ServiceBoard from "../ServiceBoard.astro";
 
-const { services, ui } = SITE;
-const marked = services.items.filter((s) => s.popular);
-if (marked.length > 6) {
-  console.warn(
-    `[site.ts] ${marked.length} services are marked popular; the home page shows the first 6. The rest appear on /services/.`,
-  );
-}
-const popular = marked.slice(0, 6);
+const { services } = SITE;
 ---
 
 <section id="services" class="section services" aria-labelledby="services-title">
@@ -21,13 +12,9 @@ const popular = marked.slice(0, 6);
     <h2 id="services-title">{services.title}</h2>
     <p class="section-intro">{services.intro}</p>
     <div class="services-layout">
-      <ServiceBoard items={popular} />
+      <ServiceBoard items={services.items} />
       <div class="services-actions">
         <BookLink />
-        <a class="text-link" href="/services/">
-          {ui.fullMenu}
-          <Icon name="arrow" size={20} />
-        </a>
       </div>
     </div>
   </div>

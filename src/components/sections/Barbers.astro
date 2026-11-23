@@ -1,9 +1,9 @@
 ---
 // Home page barber row. Built for 1–4 barbers; with one barber it becomes a
-// single portrait + name + specialty, linking to /barbers/ for the full bio.
+// single portrait (optional) + name + specialty + bio.
 import { Picture } from "astro:assets";
 import { SITE } from "../../config/site";
-import { fill } from "../../lib/format";
+import { fill, telHref } from "../../lib/format";
 import { photo } from "../../lib/media";
 import BookLink from "../BookLink.astro";
 import Icon from "../Icon.astro";
@@ -19,10 +19,11 @@ const solo = barbers.items.length === 1;
     <ul class:list={["barber-list", { solo }]}>
       {
         barbers.items.map((b) => (
-          <li class="barber">
+          <li class:list={["barber", { "no-photo": !b.photo }]}>
+            {b.photo && (
             <Picture
               src={photo(b.photo)}
-              alt={b.photoAlt}
+              alt={b.photoAlt ?? ""}
               formats={["avif", "webp"]}
               widths={[320, 480, 640]}
               sizes={solo ? "(min-width: 48rem) 20rem, 100vw" : "(min-width: 48rem) 16rem, 50vw"}
@@ -31,19 +32,40 @@ const solo = barbers.items.length === 1;
               decoding="async"
               class="barber-photo"
             />
+            )}
             <div class="barber-text">
               <h3>{b.name ?? <Todo label="barber name" />}</h3>
               <p class="barber-role">{b.role}</p>
               <p class="barber-specialty">{b.specialty ?? <Todo label="specialty" />}</p>
+              {b.bio && <p class="barber-bio">{b.bio}</p>}
+              {(b.contact.phone || b.contact.email) && (
+                <div class="barber-contact">
+                  <h4>{barbers.contactTitle}</h4>
+                  <ul>
+                    {b.contact.phone && (
+                      <li>
+                        <a href={telHref(b.contact.phone) ?? undefined}>
+                          <Icon name="phone" size={18} />
+                          {b.contact.phoneDisplay ?? b.contact.phone}
+                        </a>
+                      </li>
+                    )}
+                    {b.contact.email && (
+                      <li>
+                        <a href={`mailto:${b.contact.email}`}>
+                          <Icon name="mail" size={18} />
+                          {b.contact.email}
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
               <div class="barber-actions">
                 <BookLink
                   href={b.bookingUrl}
                   label={b.name ? fill(ui.bookWith, { name: b.name.split(" ")[0] ?? b.name }) : ui.bookNow}
                 />
-                <a class="text-link" href="/barbers/">
-                  {b.name ? fill(ui.meetNamed, { name: b.name.split(" ")[0] ?? b.name }) : ui.meetBarber}
-                  <Icon name="arrow" size={20} />
-                </a>
               </div>
             </div>
           </li>
@@ -91,6 +113,42 @@ const solo = barbers.items.length === 1;
     color: var(--ink-muted);
   }
 
+  .barber-contact {
+    margin-block-start: var(--space-3);
+  }
+
+  .barber-contact h4 {
+    font-family: var(--font-board);
+    font-weight: 600;
+    font-size: 1.125rem;
+    letter-spacing: var(--tracking-board);
+    text-transform: uppercase;
+    margin: 0 0 var(--space-1);
+  }
+
+  .barber-contact ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .barber-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-block-size: 44px;
+    font-weight: 700;
+    color: var(--gold-ink);
+    overflow-wrap: anywhere;
+  }
+
+  .barber-bio {
+    max-inline-size: 60ch;
+    margin-block-start: var(--space-2);
+  }
+
   .barber-actions {
     display: flex;
     flex-wrap: wrap;
@@ -105,7 +163,7 @@ const solo = barbers.items.length === 1;
   }
 
   @container (min-width: 44rem) {
-    .barber {
+    .barber:not(.no-photo) {
       grid-template-columns: 20rem 1fr;
       align-items: center;
       gap: var(--space-5);

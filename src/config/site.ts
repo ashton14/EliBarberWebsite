@@ -70,8 +70,10 @@ export interface Review {
   /** e.g. "2026-03-14" */
   date: string;
   rating: 1 | 2 | 3 | 4 | 5;
-  /** Word for word from Google. Do not edit. */
+  /** Word for word from the source. Do not edit. */
   text: string;
+  /** Where the review was posted. Defaults to ui.reviewSource ("Google"). */
+  source?: string;
 }
 
 export interface FaqItem {
@@ -245,18 +247,20 @@ export const SITE: SiteConfig = {
   },
 
   business: {
-    phone: null, // TODO
-    phoneDisplay: null, // TODO
-    email: null, // TODO
+    phone: "+18054379996",
+    // TODO: confirm this matches the Google profile exactly
+    phoneDisplay: "(805) 437-9996",
+    email: "info@conejovalleybarber.com", // from conejovalleybarber.com
     address: {
-      street: null, // TODO
+      // TODO: confirm capitalization matches the Google profile (owner wrote "60 Houston DR")
+      street: "60 Houston Dr",
       city: "Thousand Oaks",
       region: "CA",
-      postalCode: null, // TODO
+      postalCode: "91360",
       country: "US",
     },
     geo: null, // TODO: { latitude: 34.17, longitude: -118.84 } copied from the Maps pin
-    bookingUrl: null, // TODO: Booksy / Square / Fresha / Vagaro link
+    bookingUrl: "https://book.heygoldie.com/Barber-7f8963f4ef15", // Goldie
     googleProfileUrl: null, // TODO
     googleReviewUrl: null, // TODO: the "write a review" link
     googleRating: null, // TODO: { value: 4.9, count: 123 } — real numbers only
@@ -266,10 +270,10 @@ export const SITE: SiteConfig = {
       facebook: null, // TODO
       yelp: null, // TODO
     },
-    walkIns: null, // TODO: true / false
-    payment: null, // TODO: e.g. ["Cash", "Visa", "Mastercard", "Apple Pay"]
+    walkIns: true,
+    payment: null, // TODO: owner wrote "Via" — ask which payments he takes
     parking: null, // TODO: parking, landmarks, directions notes
-    priceRange: null, // TODO: e.g. "$$"
+    priceRange: null, // TODO: owner wrote "S" — ask if he meant "$" or "$$"
     areasServed: [
       "Thousand Oaks",
       "Newbury Park",
@@ -281,53 +285,59 @@ export const SITE: SiteConfig = {
     timeZone: "America/Los_Angeles",
   },
 
-  // TODO: real hours. Example: Monday: { opens: "09:00", closes: "19:00" }, Sunday: "closed"
+  // From conejovalleybarber.com (Nov 2026). TODO: confirm with Eli; his sheet's Hours tab is blank.
   hours: {
-    Monday: null,
-    Tuesday: null,
-    Wednesday: null,
-    Thursday: null,
-    Friday: null,
-    Saturday: null,
-    Sunday: null,
+    Monday: "closed",
+    Tuesday: "closed",
+    Wednesday: { opens: "11:00", closes: "16:30" },
+    Thursday: "closed",
+    Friday: "closed",
+    Saturday: { opens: "12:00", closes: "16:00" },
+    Sunday: "closed",
   },
 
   hero: {
     title: "Sharp Cuts & Clean Fades in Thousand Oaks",
-    lede: "Haircuts, fades and beard trims. Book your chair online.",
-    photo: "placeholder-hero-barber-at-work.jpg", // TODO: real photo
-    // TODO: with the real photo, describe it, e.g. "Barber finishing a skin fade at Conejo Barber in Thousand Oaks"
-    photoAlt: "Photo placeholder: barber at work",
-    photoPosition: "70% 40%",
+    lede: "Haircuts, fades and straight razor shaves. Book your chair online.",
+    // TODO: STOCK PHOTO (CC0, Wikimedia Commons), not the shop's work. Replace
+    // with a real photo and describe it, e.g. "Barber finishing a skin fade at Conejo Barber in Thousand Oaks"
+    photo: "stock-hero-temple-fade.jpg",
+    photoAlt: "Side profile of a fresh temple fade with a sharp line-up",
+    photoPosition: "75% 35%",
   },
 
   services: {
     title: "Services & prices",
     intro: "What it costs and how long it takes, before you book.",
-    // TODO: confirm every service name, price, duration and description.
-    // Names below are the owner's suggested list; prices and times are unknown.
+    // Bookable services: names, prices and times copied from the Goldie booking
+    // page (keep names identical so visitors find them after tapping Book).
+    // Descriptions are based on conejovalleybarber.com.
+    // The last four are listed on conejovalleybarber.com but not on Goldie.
+    // TODO: get their prices and times from Eli, or remove them.
     items: [
-      { name: "Haircut", price: null, minutes: null, description: null, popular: true },
-      { name: "Skin Fade", price: null, minutes: null, description: null, popular: true },
-      { name: "Buzz Cut", price: null, minutes: null, description: null, popular: true },
-      { name: "Beard Trim & Line-Up", price: null, minutes: null, description: null, popular: true },
-      { name: "Haircut + Beard", price: null, minutes: null, description: null, popular: true },
-      { name: "Kids' Cut (12 & under)", price: null, minutes: null, description: null, popular: true },
-      { name: "Hot Towel Shave", price: null, minutes: null, description: null, popular: false },
+      { name: "Haircut", price: 45, minutes: 40, description: "Men's haircut in the style you want, from classic cuts to fades.", popular: true },
+      { name: "Skin fade", price: 50, minutes: 45, description: "A fade blended all the way down to the skin.", popular: true },
+      { name: "Beard trim", price: 20, minutes: 20, description: "Line-up and trim to keep your beard neat and presentable.", popular: true },
+      { name: "Shave", price: 40, minutes: 30, description: "Straight razor shave, an age-old barbershop tradition.", popular: true },
+      { name: "Kids Cut / Buzz Cut / Afro Shaping", price: null, minutes: null, description: "Kids' cuts, buzz cuts, Afro shaping and more.", popular: false },
+      { name: "Clean Up / Seniors / Students", price: null, minutes: null, description: "A quick clean-up, tailored to what you need.", popular: false },
+      { name: "Facial – Scrub & Black Mask", price: null, minutes: null, description: "Facial cleanse, exfoliating scrub, facial massage and mask with hot towels.", popular: false },
+      { name: "Enhancements", price: null, minutes: null, description: "Hair color enhancement, in black or brown.", popular: false },
     ],
   },
 
   gallery: {
     title: "Fresh from the chair",
     intro: "Recent cuts from the shop.",
-    // TODO: replace placeholders with real photos and accurate alt text.
+    // TODO: STOCK PHOTOS (CC0, Wikimedia Commons), not the shop's work.
+    // Replace each with a real photo and accurate alt text before launch.
     photos: [
-      { photo: "placeholder-gallery-1.jpg", alt: "Photo placeholder: skin fade" },
-      { photo: "placeholder-gallery-2.jpg", alt: "Photo placeholder: taper and line-up" },
-      { photo: "placeholder-gallery-3.jpg", alt: "Photo placeholder: beard trim" },
-      { photo: "placeholder-gallery-4.jpg", alt: "Photo placeholder: textured crop" },
-      { photo: "placeholder-gallery-5.jpg", alt: "Photo placeholder: kids' cut" },
-      { photo: "placeholder-gallery-6.jpg", alt: "Photo placeholder: hot towel shave" },
+      { photo: "stock-gallery-mid-fade.jpg", alt: "Mid fade with a clean line-up, seen from the side" },
+      { photo: "stock-gallery-hairline.jpg", alt: "Barber shaping a client's front hairline" },
+      { photo: "stock-gallery-clipper-work.jpg", alt: "Barber working with clippers at the station" },
+      { photo: "stock-gallery-beard-trim.jpg", alt: "Beard trim in the barber's chair, seen in the mirror" },
+      { photo: "stock-gallery-in-the-chair.jpg", alt: "Client in a striped cape waiting in the barber's chair" },
+      { photo: "stock-gallery-temple-fade.jpg", alt: "Temple fade with waves and a crisp edge-up" },
     ],
   },
 
@@ -335,10 +345,11 @@ export const SITE: SiteConfig = {
     title: "Meet your barber",
     items: [
       {
-        name: null, // TODO
-        role: "Owner & barber",
-        specialty: null, // TODO
-        bio: null, // TODO: 2–3 sentences in the barber's own words
+        name: "Eli", // Goldie lists "Eli R"
+        role: "Owner & barber", // TODO: confirm Eli owns the shop
+        specialty: "Fades, classic cuts and straight razor shaves",
+        // From conejovalleybarber.com
+        bio: "Eli has been proudly serving clients for over 15 years. He's known for his professional haircutting skills, which have made him popular with loyal customers. From stylish fades to classic cuts, whatever the look, he makes it happen with precision and care.",
         photo: "placeholder-barber-portrait.jpg", // TODO: real photo
         photoAlt: "Photo placeholder: barber portrait", // TODO: describe the real photo
         instagram: null, // TODO
@@ -352,21 +363,42 @@ export const SITE: SiteConfig = {
     // TODO: paste 3 or 6 real Google reviews word for word (3 or 6 fill the
     // grid evenly). Prefer recent ones under ~60 words, and ones that name a
     // service or mention kids, which answer real visitor questions.
-    items: [],
+    // Word for word from Eli's Goldie booking page (Goldie reviews, not Google).
+    // TODO: add Google reviews when available (3 or 6 fill the grid evenly).
+    items: [
+      {
+        author: "Josh P.",
+        date: "2025-07-31",
+        rating: 5,
+        text: "Eli consistently delivers an exceptional haircut every time! His skill and attention to detail are top-notch, and his positive energy creates a great atmosphere that keeps me coming back. Easily the best barbershop in the area.",
+        source: "Goldie",
+      },
+      {
+        author: "Christos",
+        date: "2025-07-16",
+        rating: 5,
+        text: "Amazing cut, chill vibe, will definitely be back!",
+        source: "Goldie",
+      },
+    ],
   },
 
   about: {
     title: "About the shop",
-    paragraphs: null, // TODO: 2–3 short paragraphs about this shop specifically
+    // Eli's bio from the sheet (typos fixed), plus copy from conejovalleybarber.com.
+    paragraphs: [
+      "Conejo Barber is a classic men's barbershop in Thousand Oaks, California. We specialize in traditional hairstyles and trendy styles for men and kids.",
+      "We've served the Conejo Valley since 2015, with the amenities and atmosphere for an optimal haircut and shave. The classic experience includes hot lather face shaves, razor edging, facial massages and grooming products made for men.",
+    ],
   },
 
   faq: {
     title: "Questions, answered",
     items: [
-      { question: "Do you take walk-ins?", answer: null },
-      { question: "Do I need to book ahead?", answer: null },
-      { question: "Do you cut kids' hair?", answer: null },
-      { question: "How long does a haircut take?", answer: null },
+      { question: "Do you take walk-ins?", answer: "Yes, walk-ins are welcome. You can also book online to save your spot." },
+      { question: "Do I need to book ahead?", answer: "It's the best way to get the time you want and skip the wait. Book online or give us a call." },
+      { question: "Do you cut kids' hair?", answer: "Yes. We cut men's and kids' hair, from traditional styles to trendy ones." },
+      { question: "How long does a haircut take?", answer: "About 40 minutes for a haircut and 45 minutes for a skin fade." },
       { question: "Where do I park?", answer: null },
       { question: "What payment do you accept?", answer: null },
       { question: "What is your cancellation policy?", answer: null },

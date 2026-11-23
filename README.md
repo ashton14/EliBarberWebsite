@@ -90,7 +90,11 @@ text and the markup always match.
    `skin-fade-thousand-oaks.jpg`.
 3. In `site.ts`, point `photo:` at the file name and write real alt text that describes the
    cut, e.g. `"Mid skin fade with textured top at Conejo Barber, Thousand Oaks"`.
-4. Delete the `placeholder-*.jpg` files you no longer use.
+4. Delete the `placeholder-*.jpg` and `stock-*.jpg` files you no longer use.
+
+**Stock photos:** the `stock-*.jpg` files are free CC0 photos from Wikimedia Commons, used as
+stand-ins until the shop's own photos arrive. They are not Conejo Barber's work, so replace
+every one before launch. Their sources are listed in `src/assets/photos/STOCK-PHOTOS.md`.
 
 At build time, Astro converts every photo to AVIF and WebP in several sizes, with explicit
 width and height. If a file name in `site.ts` doesn't exist, the build fails with a clear

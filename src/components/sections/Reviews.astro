@@ -1,5 +1,5 @@
 ---
-// Reviews: 3–6 real Google reviews, word for word, with first name + date.
+// Reviews: 3–6 real reviews (Google preferred), word for word, with first name + date.
 // Displayed visually only. No review/aggregateRating schema (Google treats
 // self-hosted reviews on a LocalBusiness as self-serving).
 // Each review is a receipt-paper slip; the real Google rating, when known,
@@ -48,7 +48,7 @@ const cols = count % 3 === 0 ? 3 : 2;
                   <p>{r.text}</p>
                 </blockquote>
                 <figcaption>
-                  {r.author} · <time datetime={r.date}>{dateFmt.format(new Date(r.date))}</time> · {ui.reviewSource}
+                  {r.author} · <time datetime={r.date}>{dateFmt.format(new Date(r.date))}</time> · {r.source ?? ui.reviewSource}
                 </figcaption>
               </figure>
             </li>

@@ -98,6 +98,7 @@ const leadTime = lead ? formatMinutes(lead.minutes) : null;
 
   .hero-photo {
     position: relative;
+    z-index: 0;
     order: -1;
     margin-inline: calc(-1 * var(--gutter));
   }
@@ -128,6 +129,9 @@ const leadTime = lead ? formatMinutes(lead.minutes) : null;
 
   .hero-board {
     position: relative;
+    /* Always above the photo: the photo comes later in the source, so
+       without this some browsers paint it over the board's top edge. */
+    z-index: 1;
     /* Overlap only the cape, never the face or the cut */
     margin-block-start: -1.5rem;
     padding: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);

@@ -30,5 +30,5 @@ export function isPlaceholder(name: string): boolean {
 
 /** Responsive widths/sizes for the hero photo (shared by Hero.astro and the
  *  <link rel="preload"> in the home page head so both pick the same file). */
-export const HERO_WIDTHS = [480, 768, 1080, 1440, 1800];
-export const HERO_SIZES = "100vw";
+export const HERO_WIDTHS = [480, 768, 1080];
+export const HERO_SIZES = "(min-width: 60rem) 24rem, 100vw";

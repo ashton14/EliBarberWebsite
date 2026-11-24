@@ -272,11 +272,9 @@ export const SITE: SiteConfig = {
   hero: {
     title: "Sharp Cuts & Clean Fades in Thousand Oaks",
     lede: "Haircuts, fades and straight razor shaves. Book your chair online.",
-    // TODO: STOCK PHOTO (CC0, Wikimedia Commons), not the shop's work. Replace
-    // with a real photo and describe it, e.g. "Barber finishing a skin fade at Conejo Barber in Thousand Oaks"
-    photo: "stock-hero-temple-fade.jpg",
-    photoAlt: "Side profile of a fresh temple fade with a sharp line-up",
-    photoPosition: "75% 35%",
+    photo: "mid-fade-slick-side-part.jpg",
+    photoAlt: "Mid skin fade with a slicked-back side part, seen in profile, at Conejo Barber in Thousand Oaks",
+    photoPosition: "50% 30%",
   },
 
   services: {
@@ -296,15 +294,11 @@ export const SITE: SiteConfig = {
   gallery: {
     title: "Fresh from the chair",
     intro: "Recent cuts from the shop.",
-    // TODO: STOCK PHOTOS (CC0, Wikimedia Commons), not the shop's work.
-    // Replace each with a real photo and accurate alt text before launch.
     photos: [
-      { photo: "stock-gallery-mid-fade.jpg", alt: "Mid fade with a clean line-up, seen from the side" },
-      { photo: "stock-gallery-hairline.jpg", alt: "Barber shaping a client's front hairline" },
-      { photo: "stock-gallery-clipper-work.jpg", alt: "Barber working with clippers at the station" },
-      { photo: "stock-gallery-beard-trim.jpg", alt: "Beard trim in the barber's chair, seen in the mirror" },
-      { photo: "stock-gallery-in-the-chair.jpg", alt: "Client in a striped cape waiting in the barber's chair" },
-      { photo: "stock-gallery-temple-fade.jpg", alt: "Temple fade with waves and a crisp edge-up" },
+      { photo: "high-skin-fade-hard-part.jpg", alt: "High skin fade with a shaved hard part, seen in profile" },
+      { photo: "low-taper-slicked-back.jpg", alt: "Low taper fade with longer hair slicked back" },
+      { photo: "mid-fade-slick-side-part.jpg", alt: "Mid skin fade with a slicked side part and a clean neckline" },
+      { photo: "high-fade-slick-back-beard.jpg", alt: "High fade with a slick-back top blended into a trimmed beard" },
     ],
   },
 
